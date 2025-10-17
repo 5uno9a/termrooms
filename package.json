@@ -1,0 +1,48 @@
+{
+  "name": "termrooms",
+  "version": "1.0.0",
+  "description": "A web-based game creation platform for terminal-based simulations and multiplayer collaboration",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:client": "cd packages/client && npm run dev",
+    "dev:server": "cd packages/server && npm run dev",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "cd packages/client && npm run build",
+    "build:server": "cd packages/server && npm run build",
+    "test": "npm run test:client && npm run test:server",
+    "test:client": "cd packages/client && npm run test",
+    "test:server": "cd packages/server && npm run test",
+    "lint": "npm run lint:client && npm run lint:server",
+    "lint:client": "cd packages/client && npm run lint",
+    "lint:server": "cd packages/server && npm run lint",
+    "type-check": "npm run type-check:client && npm run type-check:server",
+    "type-check:client": "cd packages/client && npm run type-check",
+    "type-check:server": "cd packages/server && npm run type-check",
+    "clean": "rm -rf packages/*/dist packages/*/node_modules node_modules",
+    "install:all": "npm install && cd packages/client && npm install && cd ../server && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.3.0",
+    "@types/node": "^20.10.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": [
+    "game-engine",
+    "multiplayer",
+    "terminal",
+    "simulation",
+    "react",
+    "typescript",
+    "websocket"
+  ],
+  "author": "TermRooms Team",
+  "license": "MIT"
+}
