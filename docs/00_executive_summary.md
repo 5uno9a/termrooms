@@ -2,28 +2,23 @@
 
 ## Project Overview
 
-TermRooms is a web-based platform that combines collaborative terminal rooms with real-time multiplayer simulations. Users create and join rooms using slash commands (`/create`, `/join`, `/passwd`, `/who`, `/msg`) and can run interactive simulations like ReactorSim—a nuclear reactor management game. The platform features a JSON-based game engine for creating and sharing terminal-based simulations, with a dev sandbox for building custom games.
+TermRooms is a web-based game creation platform where developers build terminal-based simulations using JSON models, and players join temporary game instances to collaborate on interactive challenges. The platform features a built-in dev sandbox for creating games like ReactorSim—a nuclear reactor management simulation—and a game library where players can discover and join public or private game instances.
 
 ## Interactive Elements
 
 This project satisfies the course requirement for interactivity by enabling users to:
-- Create and manage simulation rooms with optional password protection
-- Join multiplayer games and simulations in real-time
-- Collaborate on complex systems through terminal commands
-- Build and share custom games using the dev sandbox
-- Exchange real-time messages and coordinate actions
-- Experience hands-on systems thinking through interactive simulations
+- Create and publish terminal-based simulation games using the dev sandbox
+- Join game instances by ID/password and collaborate in real-time
+- Build custom games with draggable panels and ASCII/Unicode widgets
+- Share games publicly or keep them private
+- Experience hands-on systems thinking through multiplayer simulations
 
 ## Technical Approach
 
-The platform emphasizes practical learning outcomes for real-time web applications using modern technologies: React + Vite + TypeScript + Tailwind on the client; Node/Express with Socket.IO for WebSocket messaging; JWT (httpOnly cookies) for session security; Prisma with SQLite (development) and Postgres (production) for persistence; and CI/CD via GitHub with deploys to GitHub Pages (frontend) and Render (backend).
-
-## Accessibility & Security
-
-Accessibility and mobile responsiveness are first-class concerns: keyboard-only navigation, ARIA live regions for updates, and high-contrast, resizable monospace UI are built-in. Security includes rate limiting, hashed room passwords, role-based access checks, and minimal data collection (alias only).
+Built with React + TypeScript + Tailwind for the frontend, Node.js + Socket.IO for real-time communication, and PostgreSQL for data persistence. The platform uses a JSON-based game engine with a gridstack panel system for creating interactive dashboards. Deployed via GitHub Pages (frontend) and Render (backend).
 
 ## Learning Outcomes
 
-By project completion, the team demonstrates a fully hosted, real-time application with a clean API, comprehensive test coverage (Vitest/Playwright), and a clear demo script. The project showcases modern web development practices including real-time communication, authentication, database design, and user experience principles.
+Demonstrates modern web development practices including real-time communication, game engine architecture, collaborative interfaces, and educational simulation design. The project showcases advanced UI patterns with draggable panels, ASCII visualization, and multiplayer coordination.
 
-**Word count: 285**
+**Word count: 198**

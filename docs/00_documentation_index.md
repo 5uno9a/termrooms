@@ -1,114 +1,99 @@
-# Documentation Index
+# TermRooms Documentation Index
 
-## 📚 Complete Documentation Overview
+## 📋 Overview
+TermRooms is a web-based game creation platform where developers build terminal-based simulations using JSON models, and players join temporary game instances to collaborate on interactive challenges. The platform features a dev sandbox for creating games, a game library for discovery, and real-time multiplayer coordination.
 
-This repository contains comprehensive documentation for **TermRooms**, a web-based terminal rooms platform for real-time collaboration. The documentation is structured to support both course submission requirements and implementation guidance.
+## 📚 Documentation Structure
 
-## 🎯 Course Submission Documents
+### Core Documentation
+- **[00_executive_summary.md](./00_executive_summary.md)** - Project overview and course submission summary
+- **[01_vision.md](./01_vision.md)** - Platform architecture and core philosophy
+- **[02_commands.md](./02_commands.md)** - Complete command reference
+- **[03_features.md](./03_features.md)** - Feature specifications and requirements
+- **[04_data_model.md](./04_data_model.md)** - Database schema and data structures
+- **[05_api.md](./05_api.md)** - REST API and WebSocket specifications
+- **[06_implementation_plan.md](./06_implementation_plan.md)** - Detailed implementation plan
 
-### Primary Submission
-- **[Executive Summary](00_executive_summary.md)** - 285-word project overview for course submission
-- **[Vision & Elevator Pitch](01_vision.md)** - Core philosophy and 75-word elevator pitch
-- **[User Stories](02_user_stories.md)** - 12 detailed user stories covering all personas
+### Legacy Documentation (Reference)
+- **[07_ui_ux_design.md](./07_ui_ux_design.md)** - UI/UX design specifications
+- **[08_system_architecture.md](./08_system_architecture.md)** - System architecture details
+- **[09_dev_sandbox_and_upload.md](./09_dev_sandbox_and_upload.md)** - Dev sandbox specifications
+- **[10_project_plan.md](./10_project_plan.md)** - Project timeline and milestones
+- **[11_game_engine_specifications.md](./11_game_engine_specifications.md)** - Game engine details
+- **[12_reactor_sim_game.md](./12_reactor_sim_game.md)** - ReactorSim game specifications
+- **[13_game_engine_specifications.md](./13_game_engine_specifications.md)** - Game engine specifications
 
-## 🛠️ Technical Specifications
-
-### Requirements & Design
-- **[Feature Specifications](03_feature_specifications.md)** - Complete feature matrix with acceptance criteria
-- **[Data Model](04_data_model.md)** - Database schema, relationships, and validation rules
-- **[API Specifications](05_api_specifications.md)** - REST API and WebSocket documentation
-- **[Security & Privacy](06_security_privacy.md)** - Comprehensive security measures and compliance
-
-### User Experience
-- **[UI/UX Design](07_ui_ux_design.md)** - Design system, accessibility, and responsive design
-- **[System Architecture](08_system_architecture.md)** - Technical architecture and deployment strategy
-
-## 🚀 Development & Implementation
-
-### Project Management
-- **[Testing Strategy](09_testing_strategy.md)** - Unit, integration, E2E, and performance testing
-- **[Project Plan](10_project_plan.md)** - 4-week development timeline with milestones
-- **[GitHub Setup](11_github_setup.md)** - Repository structure and contribution guidelines
-
-### Reference Materials
-- **[Demo Script](12_demo_script.md)** - 5-minute live demonstration guide
-- **[Routes](ROUTES.md)** - Application routes and API endpoints
-- **[Repository Structure](REPO_STRUCTURE.md)** - Complete file organization
-
-## 📋 Quick Reference
-
-### Key Features
-- **Terminal Interface**: Slash commands (`/create`, `/join`, `/msg`, etc.)
-- **Real-time Communication**: WebSocket-based messaging and presence
-- **Password Protection**: Secure rooms with optional passwords
-- **Accessibility**: WCAG 2.2 AA compliance with keyboard navigation
-- **Mobile Responsive**: Works on all device sizes
-
-### Technology Stack
-- **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS
-- **Backend**: Node.js + Express + Socket.IO + Prisma
-- **Database**: PostgreSQL with Redis caching
-- **Deployment**: GitHub Pages + Render.com
-- **CI/CD**: GitHub Actions
-
-### Project Timeline
-- **Week 1**: Foundation and core features
-- **Week 2**: Real-time messaging and presence
-- **Week 3**: Security and advanced features  
-- **Week 4**: Polish, testing, and deployment
-
-## 🎯 Implementation Readiness
-
-### Ready for Development
-- ✅ Complete technical specifications
-- ✅ Detailed API documentation
-- ✅ Database schema with relationships
-- ✅ Security and privacy requirements
-- ✅ Testing strategy and coverage targets
-- ✅ Project timeline with milestones
-- ✅ GitHub setup and contribution guidelines
-
-### Next Steps
-1. **Initialize Repository**: Set up monorepo structure
-2. **Environment Setup**: Configure development environment
-3. **Database Setup**: Implement Prisma schema and migrations
-4. **Backend Development**: Build API and WebSocket server
-5. **Frontend Development**: Create React components and pages
-6. **Testing Implementation**: Add comprehensive test suite
-7. **Deployment**: Set up CI/CD and production hosting
-
-## 📖 Document Usage
-
-### For Course Submission
-- Use **Executive Summary** as your main project proposal
-- Reference **User Stories** for requirement documentation
-- Include **Feature Specifications** for technical depth
+## 🎯 Quick Start Guide
 
 ### For Implementation
-- Follow **Project Plan** for development timeline
-- Use **API Specifications** for backend development
-- Reference **UI/UX Design** for frontend development
-- Follow **Testing Strategy** for quality assurance
+1. Read **[01_vision.md](./01_vision.md)** to understand the platform architecture
+2. Review **[03_features.md](./03_features.md)** for core requirements
+3. Study **[02_commands.md](./02_commands.md)** for command structure
+4. Follow **[06_implementation_plan.md](./06_implementation_plan.md)** for development
 
-### For Team Collaboration
-- Use **GitHub Setup** for contribution guidelines
-- Reference **Repository Structure** for code organization
-- Follow **Demo Script** for presentations
+### For Course Submission
+1. Start with **[00_executive_summary.md](./00_executive_summary.md)** for the summary
+2. Review **[03_features.md](./03_features.md)** for technical requirements
+3. Check **[06_implementation_plan.md](./06_implementation_plan.md)** for timeline
 
-## 🔄 Document Maintenance
+## 🔧 Key Technical Concepts
 
-### Regular Updates
-- Update **Project Plan** as milestones are completed
-- Add new features to **Feature Specifications**
-- Update **API Specifications** as endpoints change
-- Maintain **Security & Privacy** as threats evolve
+### Platform Architecture
+- **Game Creation Platform**: Dev sandbox for building JSON-based games
+- **Game Library**: Browse and discover public/private games
+- **Game Instances**: Temporary multiplayer sessions
+- **Real-Time Collaboration**: WebSocket-based coordination
 
-### Version Control
-- All documents are version controlled with Git
-- Major changes require pull request review
-- Documentation updates should accompany code changes
-- Keep documents synchronized with implementation
+### Core Technologies
+- **Frontend**: React, TypeScript, TailwindCSS, Gridstack
+- **Backend**: Node.js, Express, Socket.IO, Prisma, PostgreSQL
+- **Game Engine**: JSON-based simulation system
+- **UI System**: Draggable panels with ASCII/Unicode widgets
+
+## 📖 Reading Order
+
+### Complete Understanding
+1. **[00_executive_summary.md](./00_executive_summary.md)** - Project overview
+2. **[01_vision.md](./01_vision.md)** - Platform architecture
+3. **[03_features.md](./03_features.md)** - Feature requirements
+4. **[02_commands.md](./02_commands.md)** - Command reference
+5. **[04_data_model.md](./04_data_model.md)** - Data structures
+6. **[05_api.md](./05_api.md)** - API specifications
+7. **[06_implementation_plan.md](./06_implementation_plan.md)** - Implementation plan
+
+### Quick Reference
+- **[02_commands.md](./02_commands.md)** - All commands
+- **[03_features.md](./03_features.md)** - Feature list
+- **[05_api.md](./05_api.md)** - API reference
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ and npm/yarn
+- PostgreSQL 14+
+- Git and GitHub account
+- Modern web browser
+
+### Setup Steps
+1. Clone the repository
+2. Follow **[06_implementation_plan.md](./06_implementation_plan.md)** Phase 1
+3. Set up development environment
+4. Start with game engine foundation
+
+## 📝 Development Notes
+
+### Key Decisions
+- **Game-First Platform**: Everything revolves around creating and playing games
+- **Temporary Instances**: Games run as sessions, not persistent rooms
+- **JSON-Based Development**: Simple, declarative game creation
+- **Real-Time Collaboration**: Multiplayer coordination during gameplay
+
+### Implementation Focus
+- **Week 1**: Foundation and game engine
+- **Week 2**: Dev sandbox and game library
+- **Week 3**: Multiplayer system and communication
+- **Week 4**: ReactorSim game and polish
 
 ---
 
-**This documentation provides everything needed to understand, implement, and maintain the TermRooms platform. Each document is self-contained but designed to work together as a comprehensive guide.**
+*This documentation is maintained as part of the TermRooms project. Last updated: January 2024*

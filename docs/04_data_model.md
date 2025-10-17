@@ -1,117 +1,105 @@
-# 04 — Data Model & Information Architecture
+# 04 — Data Model
 
-## Entity Relationships
+## Core Entities
 
-```mermaid
-erDiagram
-    User ||--o{ Room : owns
-    User ||--o{ Membership : participates
-    Room ||--o{ Membership : contains
-    Room ||--o{ Message : receives
-    User ||--o{ Message : sends
-    User ||--o{ Bookmark : creates
-    Room ||--o{ Bookmark : bookmarked
-    Room ||--o{ AuditLog : generates
-    User ||--o{ AuditLog : performs
+### Games
+```sql
+CREATE TABLE games (
+  id UUID PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  description TEXT,
+  author_id UUID NOT NULL,
+  game_data JSONB NOT NULL,  -- Complete game model
+  is_public BOOLEAN DEFAULT false,
+  password_hash VARCHAR(255),  -- For private games
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
 ```
 
-## Database Schema
+### Game Instances
+```sql
+CREATE TABLE game_instances (
+  id UUID PRIMARY KEY,
+  game_id UUID REFERENCES games(id),
+  instance_id VARCHAR(20) UNIQUE NOT NULL,  -- Human-readable ID
+  password_hash VARCHAR(255),  -- Optional password
+  state JSONB NOT NULL,  -- Current game state
+  status VARCHAR(20) DEFAULT 'waiting',  -- waiting, running, finished
+  created_at TIMESTAMP DEFAULT NOW(),
+  started_at TIMESTAMP,
+  ended_at TIMESTAMP
+);
+```
 
-### Users Table
-| Field | Type | Constraints / Indexes | Description |
-|-------|------|---------------------|-------------|
-| `id` | UUID | PK, index | Unique user identifier |
-| `alias` | varchar(24) | required, unique per day, index | Display name (unique per day) |
-| `createdAt` | timestamp | default now | Account creation time |
-| `lastSeenAt` | timestamp | index | Last activity timestamp |
-
-### Rooms Table
-| Field | Type | Constraints / Indexes | Description |
-|-------|------|---------------------|-------------|
-| `id` | UUID | PK | Unique room identifier |
-| `name` | varchar(32) | unique, index (case-insensitive) | Room name for joining |
-| `passwordHash` | varchar(255) | nullable | Bcrypt hash if password protected |
-| `topic` | varchar(140) | nullable | Room description/topic |
-| `ownerId` | UUID | FK → User.id, index | Room creator |
-| `createdAt` | timestamp | default now | Room creation time |
-| `isActive` | boolean | default true | Soft delete flag |
-
-### Memberships Table
-| Field | Type | Constraints / Indexes | Description |
-|-------|------|---------------------|-------------|
-| `id` | UUID | PK | Unique membership identifier |
-| `userId` | UUID | FK → User.id, index | Member user |
-| `roomId` | UUID | FK → Room.id, index | Room being joined |
-| `role` | enum('owner','member') | default 'member' | User role in room |
-| `joinedAt` | timestamp | default now | Join timestamp |
-| `lastSeenAt` | timestamp | index | Last activity in room |
-
-### Messages Table
-| Field | Type | Constraints / Indexes | Description |
-|-------|------|---------------------|-------------|
-| `id` | UUID | PK | Unique message identifier |
-| `roomId` | UUID | FK → Room.id, index | Target room |
-| `userId` | UUID | FK → User.id, index | Message sender |
-| `body` | text | required, max 500 chars | Message content |
-| `messageType` | enum('chat','system','command') | default 'chat' | Message type |
-| `createdAt` | timestamp | default now, index(roomId, createdAt) | Send timestamp |
-
-### Bookmarks Table
-| Field | Type | Constraints / Indexes | Description |
-|-------|------|---------------------|-------------|
-| `id` | UUID | PK | Unique bookmark identifier |
-| `userId` | UUID | FK → User.id, index | Bookmark owner |
-| `roomId` | UUID | FK → Room.id | Bookmarked room |
-| `createdAt` | timestamp | default now | Bookmark creation time |
-| `UNIQUE(userId, roomId)` | constraint | | Prevent duplicate bookmarks |
-
-### AuditLog Table
-| Field | Type | Constraints / Indexes | Description |
-|-------|------|---------------------|-------------|
-| `id` | UUID | PK | Unique log entry identifier |
-| `roomId` | UUID | FK → Room.id, index | Related room |
-| `userId` | UUID | FK → User.id, index | Actor user |
-| `action` | enum('join','leave','passwd_set','passwd_clear','topic_set','message','create') | required | Action performed |
-| `payload` | jsonb | nullable | Additional action data |
-| `ipAddress` | varchar(45) | nullable | Actor IP (for security) |
-| `createdAt` | timestamp | default now, index(roomId, createdAt) | Action timestamp |
-
-## Data Validation Rules
-
-### Room Names
-- 3-32 characters
-- Alphanumeric, hyphens, underscores only
-- Case-insensitive uniqueness
-- No reserved words: `admin`, `api`, `help`, `about`
-
-### User Aliases
-- 1-24 characters
-- Alphanumeric, hyphens, underscores, dots
-- Unique per calendar day (allows reuse)
-- No profanity or offensive content
-
-### Passwords
-- Minimum 8 characters
-- Bcrypt hashing with salt rounds: 12
-- No password reuse within 24 hours
+### Players
+```sql
+CREATE TABLE players (
+  id UUID PRIMARY KEY,
+  instance_id UUID REFERENCES game_instances(id),
+  user_id UUID,  -- Optional, for registered users
+  alias VARCHAR(50) NOT NULL,
+  role VARCHAR(20) DEFAULT 'player',
+  joined_at TIMESTAMP DEFAULT NOW(),
+  last_seen TIMESTAMP DEFAULT NOW()
+);
+```
 
 ### Messages
-- 1-500 characters
-- HTML escaped on display
-- No external links or scripts
-- Rate limited: 20 messages per 10 minutes per user
+```sql
+CREATE TABLE messages (
+  id UUID PRIMARY KEY,
+  instance_id UUID REFERENCES game_instances(id),
+  player_id UUID REFERENCES players(id),
+  type VARCHAR(20) NOT NULL,  -- chat, command, system
+  content TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+### Actions
+```sql
+CREATE TABLE actions (
+  id UUID PRIMARY KEY,
+  instance_id UUID REFERENCES game_instances(id),
+  player_id UUID REFERENCES players(id),
+  action_name VARCHAR(50) NOT NULL,
+  parameters JSONB,
+  processed_at TIMESTAMP DEFAULT NOW(),
+  result JSONB
+);
+```
+
+## Game State Structure
+```typescript
+interface GameState {
+  vars: Record<string, number>;
+  entities: Record<string, any>;
+  players: Player[];
+  tick: number;
+  status: 'waiting' | 'running' | 'paused' | 'finished';
+  winner?: string;
+  score?: Record<string, number>;
+}
+```
 
 ## Indexes for Performance
-
 ```sql
--- Primary indexes
-CREATE INDEX idx_users_alias ON users(alias);
-CREATE INDEX idx_rooms_name ON rooms(name);
-CREATE INDEX idx_memberships_user_room ON memberships(user_id, room_id);
-CREATE INDEX idx_messages_room_time ON messages(room_id, created_at);
-CREATE INDEX idx_audit_room_time ON audit_log(room_id, created_at);
+-- Game discovery
+CREATE INDEX idx_games_public ON games(is_public, created_at DESC);
+CREATE INDEX idx_games_author ON games(author_id);
 
--- Composite indexes
-CREATE INDEX idx_memberships_room_active ON memberships(room_id, last_seen_at) WHERE last_seen_at > NOW() - INTERVAL '1 hour';
-CREATE INDEX idx_messages_room_type ON messages(room_id, message_type, created_at);
+-- Instance management
+CREATE INDEX idx_instances_game ON game_instances(game_id);
+CREATE INDEX idx_instances_status ON game_instances(status);
+
+-- Player tracking
+CREATE INDEX idx_players_instance ON players(instance_id);
+CREATE INDEX idx_players_last_seen ON players(last_seen);
+
+-- Message history
+CREATE INDEX idx_messages_instance ON messages(instance_id, created_at DESC);
+
+-- Action processing
+CREATE INDEX idx_actions_instance ON actions(instance_id, processed_at);
 ```
