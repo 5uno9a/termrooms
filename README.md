@@ -7,12 +7,10 @@
 [![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-43853D?logo=node.js&logoColor=white)](https://nodejs.org/)
 
-## 🚀 Quick Start
+##  Quick Start
 
 TermRooms is a game creation platform where developers build terminal-based simulations using JSON models, and players join temporary game instances to collaborate on interactive challenges. Features a dev sandbox for creating games and a game library for discovery.
 
-### Live Demo
-🌐 **[Try TermRooms Now](https://termrooms.dev)**
 
 ### Key Features
 - **Game Creation Platform**: Build terminal-based simulations using JSON models
@@ -64,7 +62,6 @@ TermRooms is a game creation platform where developers build terminal-based simu
 - **PostgreSQL** for data persistence
 - **GitHub Actions** for CI/CD
 
-## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js 18+ and npm
@@ -108,7 +105,7 @@ TermRooms is a game creation platform where developers build terminal-based simu
 6. **Open your browser**
    Navigate to `http://localhost:5173`
 
-## 🎯 Usage
+##  Usage
 
 ### Game Discovery
 | Command | Description | Example |
@@ -143,7 +140,7 @@ TermRooms is a game creation platform where developers build terminal-based simu
 4. **Create Games**: Use `/dev new` to build your own simulations
 5. **Publish**: Use `/dev publish` to share your games
 
-## 🧪 Testing
+## Testing
 
 ### Run Tests
 ```bash
@@ -163,7 +160,7 @@ npm run test:coverage     # Coverage report
 - **E2E Tests**: Complete user journeys with Playwright
 - **Performance Tests**: Load testing with Artillery.js
 
-## 🚀 Deployment
+## Deployment
 
 ### Production Build
 ```bash
@@ -187,16 +184,6 @@ JWT_SECRET=your-secret-key
 CORS_ORIGIN=https://your-frontend-domain.com
 ```
 
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](docs/11_github_setup.md) for details.
-
-### Development Workflow
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ### Code Style
 - Follow TypeScript best practices
@@ -204,7 +191,7 @@ We welcome contributions! Please see our [Contributing Guidelines](docs/11_githu
 - Write tests for new features
 - Update documentation as needed
 
-## 📋 Project Status
+## Project Status
 
 ### Current Phase: Development
 - [x] Project setup and documentation
@@ -222,17 +209,17 @@ We welcome contributions! Please see our [Contributing Guidelines](docs/11_githu
 - **Week 3**: Multiplayer system and communication
 - **Week 4**: ReactorSim game and polish
 
-## 🐛 Known Issues
+## Known Issues
 
 - WebSocket reconnection needs improvement
 - Mobile keyboard handling could be better
 - Rate limiting needs fine-tuning
 
-## 📄 License
+##  License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [React](https://reactjs.org/) for the frontend framework
 - [Socket.IO](https://socket.io/) for real-time communication
@@ -240,7 +227,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Tailwind CSS](https://tailwindcss.com/) for styling
 - [Vite](https://vitejs.dev/) for build tooling
 
-## 📞 Support
+## Support
 
 - **Documentation**: Check the [docs](docs/) folder
 - **Issues**: [GitHub Issues](https://github.com/yourusername/termrooms/issues)
@@ -248,4 +235,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ for modern web development education**
+
