@@ -109,6 +109,7 @@ describe('GameModelParser', () => {
   test('should throw error for missing meta', () => {
     const invalidModel = { ...validGameModel };
     // Remove meta property by creating a new object without it
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { meta, ...invalidModelWithoutMeta } = invalidModel;
     
     expect(() => {

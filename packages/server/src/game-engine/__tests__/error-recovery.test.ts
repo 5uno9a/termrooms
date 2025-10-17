@@ -284,10 +284,7 @@ describe('Game Engine Error Recovery & Resilience Tests', () => {
 
   describe('Tick Loop Error Recovery', () => {
     test('should handle tick loop errors gracefully', () => {
-      let errorCaught = false;
-      
       tickLoop.onError((error) => {
-        errorCaught = true;
         expect(error).toBeDefined();
       });
 
@@ -348,10 +345,8 @@ describe('Game Engine Error Recovery & Resilience Tests', () => {
     });
 
     test('should handle rapid start/stop cycles with errors', () => {
-      let errorCount = 0;
-      
       tickLoop.onError(() => {
-        errorCount++;
+        // Error handler for testing
       });
 
       // Add a rule that causes errors
