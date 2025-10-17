@@ -1,4 +1,5 @@
 import { GameModel, GameState, Player, ActionExecution, GameEvent } from './types.js';
+import { evaluateCondition } from './condition-evaluator.js';
 
 export class GameStateManager {
   private state: GameState;
@@ -414,23 +415,10 @@ export class GameStateManager {
 
   /**
    * Check if a condition is met
+   * Uses safe condition evaluation to prevent code injection
    */
   checkCondition(condition: string): boolean {
-    // Simple condition evaluation
-    // This could be expanded to support more complex expressions
-    try {
-      // Replace variable names with their values
-      let expression = condition;
-      for (const [name, value] of Object.entries(this.state.vars)) {
-        expression = expression.replace(new RegExp(`\\b${name}\\b`, 'g'), value.toString());
-      }
-
-      // Evaluate the expression
-      // Note: In a real implementation, you'd want a safer expression evaluator
-      return eval(expression) === true;
-    } catch {
-      return false;
-    }
+    return evaluateCondition(condition, this.state);
   }
 
   /**
