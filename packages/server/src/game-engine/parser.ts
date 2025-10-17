@@ -193,18 +193,81 @@ export class GameModelParser {
         throw new Error(`action[${actionIndex}].effects[${index}] must be an object`);
       }
 
+      const effectType = this.validateActionEffectType(effect.type, `action[${actionIndex}].effects[${index}].type`);
+      
+      // Validate target - required for some effects, optional for others
+      let target = undefined;
+      if (effect.target !== undefined) {
+        target = this.validateString(effect.target, `action[${actionIndex}].effects[${index}].target`);
+      } else if (['set_var', 'modify_var', 'set_entity'].includes(effectType)) {
+        throw new Error(`action[${actionIndex}].effects[${index}].target is required for ${effectType} effects`);
+      }
+
+      // Validate value
+      let value = undefined;
+      if (effect.value !== undefined) {
+        value = effect.value;
+      }
+
+      // Validate operation - required for modify_var
+      let operation = undefined;
+      if (effect.operation !== undefined) {
+        operation = this.validateOperation(effect.operation, `action[${actionIndex}].effects[${index}].operation`);
+      } else if (effectType === 'modify_var') {
+        throw new Error(`action[${actionIndex}].effects[${index}].operation is required for modify_var effects`);
+      }
+
+      // Validate message - required for message and add_log effects
+      let message = undefined;
+      if (effect.message !== undefined) {
+        message = this.validateString(effect.message, `action[${actionIndex}].effects[${index}].message`);
+      } else if (['message', 'add_log'].includes(effectType)) {
+        throw new Error(`action[${actionIndex}].effects[${index}].message is required for ${effectType} effects`);
+      }
+
+      // Validate playerId - required for update_score
+      let playerId = undefined;
+      if (effect.playerId !== undefined) {
+        playerId = this.validateString(effect.playerId, `action[${actionIndex}].effects[${index}].playerId`);
+      } else if (effectType === 'update_score') {
+        throw new Error(`action[${actionIndex}].effects[${index}].playerId is required for update_score effects`);
+      }
+
+      // Validate eventType - required for add_event
+      let eventType = undefined;
+      if (effect.eventType !== undefined) {
+        eventType = this.validateString(effect.eventType, `action[${actionIndex}].effects[${index}].eventType`);
+      } else if (effectType === 'add_event') {
+        throw new Error(`action[${actionIndex}].effects[${index}].eventType is required for add_event effects`);
+      }
+
+      // Validate status - required for set_status
+      let status = undefined;
+      if (effect.status !== undefined) {
+        const validStatuses = ['running', 'paused', 'ended', 'waiting', 'finished'];
+        if (!validStatuses.includes(effect.status)) {
+          throw new Error(`action[${actionIndex}].effects[${index}].status must be one of: ${validStatuses.join(', ')}`);
+        }
+        status = effect.status;
+      } else if (effectType === 'set_status') {
+        throw new Error(`action[${actionIndex}].effects[${index}].status is required for set_status effects`);
+      }
+
       return {
-        type: this.validateActionEffectType(effect.type, `action[${actionIndex}].effects[${index}].type`),
-        target: this.validateString(effect.target, `action[${actionIndex}].effects[${index}].target`),
-        value: effect.value,
-        operation: effect.operation ? this.validateOperation(effect.operation, `action[${actionIndex}].effects[${index}].operation`) : undefined,
-        message: effect.message ? this.validateString(effect.message, `action[${actionIndex}].effects[${index}].message`) : undefined
+        type: effectType,
+        target,
+        value,
+        operation,
+        message,
+        playerId,
+        eventType,
+        status
       };
     });
   }
 
   private static validateActionEffectType(type: any, path: string): string {
-    const validTypes = ['set_var', 'modify_var', 'set_entity', 'trigger_event', 'message'];
+    const validTypes = ['set_var', 'modify_var', 'set_entity', 'trigger_event', 'message', 'update_score', 'add_log', 'add_event', 'set_status'];
     if (!validTypes.includes(type)) {
       throw new Error(`${path} must be one of: ${validTypes.join(', ')}`);
     }
