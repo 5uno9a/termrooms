@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Game {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  authorId    String
+  gameData    Json     // Complete game model JSON
+  isPublic    Boolean  @default(false)
+  passwordHash String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  instances   GameInstance[]
+
+  @@map("games")
+}
+
+model GameInstance {
+  id           String   @id @default(cuid())
+  gameId       String
+  instanceId   String   @unique // Human-readable ID like "REACTOR-ABC123"
+  passwordHash String?
+  state        Json     // Current game state
+  status       String   @default("waiting") // waiting, running, finished
+  createdAt    DateTime @default(now())
+  startedAt    DateTime?
+  endedAt      DateTime?
+
+  // Relations
+  game     Game      @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  players  Player[]
+  messages Message[]
+  actions  Action[]
+
+  @@map("game_instances")
+}
+
+model Player {
+  id         String   @id @default(cuid())
+  instanceId String
+  userId     String?  // Optional, for registered users
+  alias      String
+  role       String   @default("player")
+  joinedAt   DateTime @default(now())
+  lastSeen   DateTime @default(now())
+
+  // Relations
+  instance GameInstance @relation(fields: [instanceId], references: [id], onDelete: Cascade)
+  messages Message[]
+  actions  Action[]
+
+  @@map("players")
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  instanceId String
+  playerId   String
+  type       String   // chat, command, system
+  content    String
+  createdAt  DateTime @default(now())
+
+  // Relations
+  instance GameInstance @relation(fields: [instanceId], references: [id], onDelete: Cascade)
+  player   Player       @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+model Action {
+  id         String   @id @default(cuid())
+  instanceId String
+  playerId   String
+  actionName String
+  parameters Json?
+  processedAt DateTime @default(now())
+  result     Json?
+
+  // Relations
+  instance GameInstance @relation(fields: [instanceId], references: [id], onDelete: Cascade)
+  player   Player       @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@map("actions")
+}
