@@ -2,17 +2,17 @@
 
 ## Project Overview
 
-TermRooms is a lightweight, web-based platform that enables users to create and join collaborative "terminal rooms" directly in their browser—no native client required. Inspired by the immediacy of command-line workflows, TermRooms transforms simple slash-commands into interactive room management: `/create`, `/join`, `/passwd`, `/who`, `/msg`, and more. Each room presents a split view with a terminal-style command input/output pane, a live participant list, and a minimal message stream.
+TermRooms is a web-based platform that combines collaborative terminal rooms with real-time multiplayer simulations. Users create and join rooms using slash commands (`/create`, `/join`, `/passwd`, `/who`, `/msg`) and can run interactive simulations like ReactorSim—a nuclear reactor management game. The platform features a JSON-based game engine for creating and sharing terminal-based simulations, with a dev sandbox for building custom games.
 
 ## Interactive Elements
 
-This project satisfies the course requirement for interactivity by enabling authenticated or guest users to:
-- Create and manage rooms with optional password protection
-- Join/leave rooms through terminal commands
-- Exchange real-time messages within rooms
-- Set room topics and manage participant permissions
-- Bookmark favorite rooms for quick access
-- View audit logs of room activities
+This project satisfies the course requirement for interactivity by enabling users to:
+- Create and manage simulation rooms with optional password protection
+- Join multiplayer games and simulations in real-time
+- Collaborate on complex systems through terminal commands
+- Build and share custom games using the dev sandbox
+- Exchange real-time messages and coordinate actions
+- Experience hands-on systems thinking through interactive simulations
 
 ## Technical Approach
 

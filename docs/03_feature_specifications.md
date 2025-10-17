@@ -5,17 +5,18 @@
 | Priority | Feature | Acceptance Criteria |
 |----------|---------|-------------------|
 | **Must** | Create/Join/Leave Rooms | `/create {name}` returns success with room id; `/join {name}` admits user (or prompts password); `/leave` removes presence and emits `user_left` to all clients |
-| **Must** | Password Protection | `/passwd set {min8chars}` hashes and stores password; `/passwd clear` removes it; joining a protected room requires password or emits error: unauthorized |
-| **Must** | Real-time Presence | Joining/leaving broadcasts `user_joined`/`user_left`; `/who` lists active members within 200ms under normal load (≤50 users/room) |
+| **Must** | Game Engine | JSON-based simulation system with state management, tick loop, and real-time updates |
+| **Must** | ReactorSim Game | Nuclear reactor management simulation with multiplayer collaboration |
+| **Must** | Real-time State Sync | Game state updates broadcast to all players within 100ms; deterministic simulation |
+| **Must** | Dev Sandbox | JSON model editor for creating custom games; validation and preview system |
 | **Must** | Messaging | `/msg {text}` emits to room; messages render in stream and are persisted with timestamp and sender |
-| **Must** | Bookmarks | "⭐ Bookmark" adds `{userId, roomId}`; appears on landing; removal updates immediately |
 | **Must** | Accessibility | All actions possible via keyboard; live regions narrate events; contrast ≥ 4.5:1; focus visible |
-| **Should** | Topics | `/topic {text}` stores and broadcasts; displays at top of room |
-| **Should** | Audit Log | Admin can view last 100 events with timestamps and actor ids |
+| **Should** | Password Protection | `/passwd set {min8chars}` hashes and stores password; `/passwd clear` removes it |
+| **Should** | Game Sharing | Upload/download custom games; public/private game library |
+| **Should** | Role-based Actions | Different user roles (operator, engineer, observer) with different permissions |
 | **Should** | Mobile Responsive | Terminal remains usable on mobile; panels stack vertically; touch targets ≥ 44px |
-| **Could** | Ephemeral Guest Links | One-time URLs auto-expire after first use or 10 minutes |
-| **Could** | Slash Autocomplete | Up/down history; tab to cycle known commands |
-| **Could** | Emoji Reactions | Quick reactions to messages with emoji picker |
+| **Could** | Advanced Simulations | Additional built-in games (CitySim, SpaceSim) |
+| **Could** | Game Analytics | Track game performance and user engagement |
 
 ## Terminal Command Specifications
 
@@ -24,11 +25,16 @@
 | `/create` | `/create {roomName}` | roomName 3–32, alnum + - | `created room {name}` | `room exists` | REST POST /rooms; WS joined |
 | `/join` | `/join {roomName} [password]` | name exists; password if required | `joined {name}` | `not found / unauthorized` | REST POST /rooms/{name}/join; WS joined |
 | `/leave` | `/leave` | in room | `left {name}` | `not in room` | WS leave_room |
-| `/passwd` | `/passwd set {p}` or `/passwd clear` | set: ≥8 chars owner only | `password set/cleared` | `forbidden / weak password` | REST PUT /rooms/{id}/password |
-| `/who` | `/who` | in room | list rendered | `not in room` | WS get_presence |
 | `/msg` | `/msg {text}` | 1–500 chars | echoes message | `not in room` | WS send_message |
-| `/topic` | `/topic {text}` | owner; ≤140 chars | `topic updated` | `forbidden` | REST PUT /rooms/{id}/topic; WS broadcast |
+| `/who` | `/who` | in room | list rendered | `not in room` | WS get_presence |
 | `/help` | `/help` | — | list of commands | — | client-side |
+| **Game Commands** | | | | | |
+| `/game start {type}` | `/game start reactor` | valid game type | `game started: {type}` | `game already running` | WS start_game |
+| `/game join` | `/game join` | game running, not joined | `joined game as {role}` | `no active game` | WS join_game |
+| `/game leave` | `/game leave` | in game | `left game` | `not in game` | WS leave_game |
+| `/game status` | `/game status` | in room | game state rendered | `no active game` | WS get_game_state |
+| `/action {action}` | `/action pump_on` | valid action, in game | `action queued` | `invalid action` | WS game_action |
+| `/sim {command}` | `/sim pause` | game running | `simulation paused` | `no active game` | WS sim_command |
 
 ## Performance Requirements
 - **Response Time**: API responses < 200ms, WebSocket broadcasts < 100ms

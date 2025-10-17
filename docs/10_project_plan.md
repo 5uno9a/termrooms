@@ -2,8 +2,8 @@
 
 ## Project Timeline (4 Weeks)
 
-### Week 1: Foundation & Core Features
-**Goal**: Basic room creation and joining functionality
+### Week 1: Foundation & Game Engine Core
+**Goal**: Basic room creation and game engine foundation
 
 #### Milestone 1.1: Project Setup (Days 1-2)
 - [ ] Initialize GitHub repository with proper structure
@@ -12,72 +12,72 @@
 - [ ] Set up CI/CD pipeline with GitHub Actions
 - [ ] Create basic project documentation
 
-#### Milestone 1.2: Backend Foundation (Days 3-4)
+#### Milestone 1.2: Game Engine Foundation (Days 3-4)
+- [ ] Implement core game engine (State Manager, Rule Engine)
+- [ ] Create JSON model loader and validator
+- [ ] Set up tick loop system
+- [ ] Implement basic action processing
+- [ ] Create game state synchronization
+
+#### Milestone 1.3: Backend Foundation (Days 5-7)
 - [ ] Set up Express.js server with TypeScript
 - [ ] Configure Prisma with PostgreSQL
 - [ ] Implement basic authentication (JWT)
 - [ ] Create room management API endpoints
 - [ ] Set up WebSocket server with Socket.IO
 
-#### Milestone 1.3: Frontend Foundation (Days 5-7)
-- [ ] Create React app with routing
-- [ ] Implement terminal component
-- [ ] Build room creation/joining UI
-- [ ] Add basic styling with Tailwind CSS
-- [ ] Connect frontend to backend APIs
-
 **Deliverables**:
-- Working room creation and joining
-- Basic terminal interface
+- Working game engine core
+- JSON model system
+- Basic room creation and joining
 - Authentication system
-- Database schema implemented
 
-### Week 2: Real-time Features & Messaging
-**Goal**: Real-time communication and presence tracking
+### Week 2: ReactorSim Game & Real-time Features
+**Goal**: Implement ReactorSim game and real-time synchronization
 
-#### Milestone 2.1: WebSocket Implementation (Days 8-9)
-- [ ] Implement real-time room joining/leaving
-- [ ] Add presence tracking (who's online)
-- [ ] Create message broadcasting system
-- [ ] Handle connection/disconnection events
-- [ ] Add error handling and reconnection logic
+#### Milestone 2.1: ReactorSim Implementation (Days 8-9)
+- [ ] Create ReactorSim game model (JSON)
+- [ ] Implement reactor variables and entities
+- [ ] Add player actions (pump controls, control rods, etc.)
+- [ ] Create simulation rules and random events
+- [ ] Implement game state visualization
 
-#### Milestone 2.2: Messaging System (Days 10-11)
-- [ ] Implement `/msg` command functionality
-- [ ] Create message persistence in database
-- [ ] Build message display component
-- [ ] Add message timestamps and user attribution
-- [ ] Implement message history loading
+#### Milestone 2.2: Real-time Game Sync (Days 10-11)
+- [ ] Implement real-time game state broadcasting
+- [ ] Add multiplayer game joining/leaving
+- [ ] Create role-based action system
+- [ ] Handle game state conflicts and validation
+- [ ] Add game event logging and history
 
 #### Milestone 2.3: Terminal Commands (Days 12-14)
-- [ ] Implement all core terminal commands (`/who`, `/leave`, `/help`)
+- [ ] Implement game commands (`/game start`, `/action`, `/sim`)
 - [ ] Add command validation and error handling
 - [ ] Create command history and navigation
 - [ ] Implement command auto-completion
 - [ ] Add command output formatting
 
 **Deliverables**:
-- Real-time messaging system
+- Working ReactorSim multiplayer game
+- Real-time game state synchronization
 - Complete terminal command set
-- Presence tracking
-- Message persistence
+- Role-based action system
 
-### Week 3: Security & Advanced Features
-**Goal**: Password protection, bookmarks, and security features
+### Week 3: Dev Sandbox & Security
+**Goal**: Dev sandbox for game creation and security features
 
-#### Milestone 3.1: Security Implementation (Days 15-16)
+#### Milestone 3.1: Dev Sandbox Implementation (Days 15-16)
+- [ ] Create JSON model editor with syntax highlighting
+- [ ] Implement game model validation and preview
+- [ ] Add game testing and debugging tools
+- [ ] Create game sharing and library system
+- [ ] Implement game templates and examples
+
+#### Milestone 3.2: Security Implementation (Days 17-18)
 - [ ] Implement password protection for rooms (`/passwd`)
 - [ ] Add rate limiting for API and WebSocket
 - [ ] Implement input validation and sanitization
 - [ ] Add CSRF protection
 - [ ] Create audit logging system
-
-#### Milestone 3.2: Bookmarks & Topics (Days 17-18)
-- [ ] Implement bookmark system
-- [ ] Add room topic functionality (`/topic`)
-- [ ] Create bookmark management UI
-- [ ] Implement bookmark persistence
-- [ ] Add bookmark sharing features
 
 #### Milestone 3.3: Testing & Quality (Days 19-21)
 - [ ] Write comprehensive unit tests
@@ -87,10 +87,10 @@
 - [ ] Security testing and vulnerability assessment
 
 **Deliverables**:
-- Secure room management
-- Bookmark system
+- Working dev sandbox
+- Game creation and sharing system
 - Comprehensive test suite
-- Performance optimization
+- Security implementation
 
 ### Week 4: Polish & Deployment
 **Goal**: Production-ready application with full deployment

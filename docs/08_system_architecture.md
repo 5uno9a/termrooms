@@ -6,48 +6,59 @@
 graph TB
     subgraph "Client Layer"
         A[React SPA] --> B[Terminal Component]
-        A --> C[Participants Panel]
-        A --> D[Message Stream]
-        A --> E[Auth Context]
+        A --> C[Game Engine Client]
+        A --> D[Dev Sandbox Editor]
+        A --> E[Participants Panel]
+        A --> F[Message Stream]
+        A --> G[Auth Context]
     end
     
     subgraph "CDN & Static"
-        F[GitHub Pages] --> A
-        G[Vercel Edge] --> A
+        H[GitHub Pages] --> A
+        I[Vercel Edge] --> A
     end
     
     subgraph "API Gateway"
-        H[Express.js Server] --> I[Auth Middleware]
-        H --> J[Rate Limiting]
-        H --> K[Request Validation]
+        J[Express.js Server] --> K[Auth Middleware]
+        J --> L[Rate Limiting]
+        J --> M[Request Validation]
     end
     
     subgraph "WebSocket Layer"
-        L[Socket.IO Server] --> M[Room Manager]
-        L --> N[Presence Tracker]
-        L --> O[Message Broker]
+        N[Socket.IO Server] --> O[Room Manager]
+        N --> P[Game Engine Server]
+        N --> Q[Presence Tracker]
+        N --> R[Message Broker]
+    end
+    
+    subgraph "Game Engine"
+        P --> S[State Manager]
+        P --> T[Rule Engine]
+        P --> U[Tick Loop]
+        P --> V[Model Loader]
     end
     
     subgraph "Data Layer"
-        P[PostgreSQL] --> Q[Prisma ORM]
-        R[Redis Cache] --> S[Session Store]
-        R --> T[Rate Limit Store]
+        W[PostgreSQL] --> X[Prisma ORM]
+        Y[Redis Cache] --> Z[Session Store]
+        Y --> AA[Game State Cache]
+        Y --> BB[Rate Limit Store]
     end
     
     subgraph "External Services"
-        U[Render.com] --> H
-        U --> L
-        V[GitHub Actions] --> W[CI/CD Pipeline]
+        CC[Render.com] --> J
+        CC --> N
+        DD[GitHub Actions] --> EE[CI/CD Pipeline]
     end
     
-    A --> H
-    A --> L
-    H --> Q
-    L --> Q
-    H --> R
-    L --> R
-    W --> F
-    W --> U
+    A --> J
+    A --> N
+    J --> X
+    N --> X
+    J --> Y
+    N --> Y
+    EE --> H
+    EE --> CC
 ```
 
 ## Technology Stack
