@@ -35,6 +35,12 @@
 | `/game status` | `/game status` | in room | game state rendered | `no active game` | WS get_game_state |
 | `/action {action}` | `/action pump_on` | valid action, in game | `action queued` | `invalid action` | WS game_action |
 | `/sim {command}` | `/sim pause` | game running | `simulation paused` | `no active game` | WS sim_command |
+| **UI Commands** | | | | | |
+| `/ui panel add {id}` | `/ui panel add left width=48 title="CORE STATUS"` | valid id, width | `panel added` | `panel exists` | WS ui_panel_add |
+| `/ui add {widget}` | `/ui add bar panel=left var=power` | valid widget, panel | `widget added` | `invalid panel` | WS ui_widget_add |
+| `/ui layout {type}` | `/ui layout vertical` | valid layout type | `layout changed` | `invalid layout` | WS ui_layout_change |
+| `/ui panel move {id}` | `/ui panel move left x=2 y=3` | valid panel, coords | `panel moved` | `invalid position` | WS ui_panel_move |
+| `/ui panel resize {id}` | `/ui panel resize left w=4 h=6` | valid panel, size | `panel resized` | `invalid size` | WS ui_panel_resize |
 
 ## Performance Requirements
 - **Response Time**: API responses < 200ms, WebSocket broadcasts < 100ms

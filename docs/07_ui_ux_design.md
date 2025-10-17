@@ -2,12 +2,13 @@
 
 ## Design System
 
-### Color Palette
+### Color Palette (PlanetScale-Inspired)
 ```css
 /* Primary Colors */
 --bg-primary: #0A0A0A;        /* Main background */
 --bg-secondary: #151515;      /* Panel background */
 --bg-tertiary: #1F1F1F;       /* Input/button background */
+--bg-panel: #151515;          /* Panel background with subtle glow */
 
 /* Text Colors */
 --text-primary: #FFFFFF;      /* Primary text */
@@ -25,6 +26,30 @@
 --border: #333333;            /* Default borders */
 --border-focus: #00D4FF;      /* Focus borders */
 --border-hover: #555555;      /* Hover borders */
+--panel-glow: rgba(0, 212, 255, 0.1); /* Subtle panel glow */
+```
+
+### Panel Design Language
+```css
+/* Panel Styling */
+.panel {
+  background: var(--bg-panel);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  border-color: var(--border-hover);
+}
+
+.panel:focus-within {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px var(--panel-glow);
+}
 ```
 
 ### Typography
@@ -81,9 +106,70 @@ interface TerminalOutput {
 - Copy-to-clipboard functionality
 - Keyboard shortcuts (Ctrl+C, Ctrl+L, etc.)
 
-### Multi-Panel Layout System
+### Gridstack/Draggable Panel System
 
-#### ReactorSim Panels
+#### Panel Layout Management
+```tsx
+interface PanelLayout {
+  id: string;
+  title: string;
+  layout: {
+    x: number;        // Grid position X
+    y: number;        // Grid position Y
+    w: number;        // Width in grid units
+    h: number;        // Height in grid units
+    minW: number;     // Minimum width
+    minH: number;     // Minimum height
+    maxW: number;     // Maximum width
+    maxH: number;     // Maximum height
+  };
+  widgets: Widget[];
+  visible: boolean;
+  resizable: boolean;
+  draggable: boolean;
+}
+
+interface Widget {
+  id: string;
+  type: 'bar' | 'schematic' | 'log' | 'checklist' | 'terminal' | 'grid';
+  config: WidgetConfig;
+  bindings: {
+    vars?: string[];
+    entities?: string[];
+    events?: string[];
+  };
+}
+```
+
+#### UI Command System
+```typescript
+// Panel Management Commands
+/ui panel add left width=48 title="CORE SYSTEM STATUS"
+/ui panel add right width=44 title="COOLANT FLOW NETWORK"
+/ui panel add midL width=48 title="PLANT MAP"
+/ui panel add midR width=44 title="ACTIVE TASKS"
+/ui panel add log width=92 title="EVENT LOG"
+/ui panel add menu width=92 title="MANUAL MENU"
+/ui panel add cmd width=92 title="COMMAND LINE"
+
+// Widget Management Commands
+/ui add bar panel=left var=power label="Power"
+/ui add bar panel=left var=core_temp label="Temp" unit="°C"
+/ui add schematic panel=right id=coolant_flow
+/ui add grid panel=midL rows=2 cols=3
+/ui add checklist panel=midR bind=tasks
+/ui add log panel=log source=events
+/ui add terminal panel=cmd
+
+// Layout Commands
+/ui layout vertical    // Stack panels vertically
+/ui layout horizontal  // Arrange panels horizontally
+/ui layout grid        // Grid-based layout
+/ui panel move <id> x=2 y=3
+/ui panel resize <id> w=4 h=6
+```
+
+#### ReactorSim Panel Types
 ```tsx
 interface ReactorSimPanels {
   overview: OverviewPanel;        // Core temperature, pressure, power
@@ -91,6 +177,10 @@ interface ReactorSimPanels {
   events: EventsPanel;            // System alerts, warnings, logs
   commands: CommandLogPanel;      // Action history, user commands
   players: PlayerPanel;           // Online users, roles, status
+  diagnostics: DiagnosticsPanel;  // Hardware integrity, pump wear
+  alerts: AlertsPanel;           // Filtered warnings/errors only
+  timeline: TimelinePanel;       // Scrollable tick timeline
+  performance: PerformancePanel;  // Game statistics and metrics
 }
 ```
 
@@ -100,6 +190,10 @@ interface ReactorSimPanels {
 - **EventsPanel**: Chronological log of system events and alerts
 - **CommandLogPanel**: History of user actions and system responses
 - **PlayerPanel**: Multi-user collaboration with roles and presence
+- **DiagnosticsPanel**: Hardware integrity, pump wear, valve pressure
+- **AlertsPanel**: Filters only warnings/errors to reduce noise
+- **TimelinePanel**: Scrollable tick timeline of state changes
+- **PerformancePanel**: Game statistics, completion time, efficiency
 
 ### ASCII/Unicode Visualization Widgets
 

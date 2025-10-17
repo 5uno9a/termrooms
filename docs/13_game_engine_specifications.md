@@ -26,6 +26,14 @@ interface GameModel {
   rules: Rule[];
   init_random?: RandomInit;
   random_events?: RandomEvent[];
+  ui: {
+    panels: PanelLayout[];
+    layout: {
+      type: 'grid' | 'vertical' | 'horizontal';
+      gridSize: number;
+      maxPanels: number;
+    };
+  };
 }
 
 interface Variable {
@@ -186,6 +194,90 @@ interface Condition {
       ]
     }
   ]
+}
+```
+
+### UI Layout System
+```json
+{
+  "ui": {
+    "layout": {
+      "type": "grid",
+      "gridSize": 12,
+      "maxPanels": 8
+    },
+    "panels": [
+      {
+        "id": "overview",
+        "title": "⚛ CORE SYSTEM STATUS",
+        "layout": { "x": 0, "y": 0, "w": 6, "h": 8, "minW": 3, "minH": 4, "maxW": 8, "maxH": 12 },
+        "widgets": [
+          { "type": "bar", "var": "power", "label": "Power", "unit": "MW" },
+          { "type": "bar", "var": "core_temp", "label": "Temperature", "unit": "°C" },
+          { "type": "bar", "var": "pressure", "label": "Pressure", "unit": "bar" },
+          { "type": "bar", "var": "radiation_level", "label": "Radiation", "unit": "mSv/h" }
+        ],
+        "visible": true,
+        "resizable": true,
+        "draggable": true
+      },
+      {
+        "id": "coolant",
+        "title": "🌊 COOLANT FLOW NETWORK",
+        "layout": { "x": 6, "y": 0, "w": 6, "h": 8, "minW": 4, "minH": 4, "maxW": 8, "maxH": 12 },
+        "widgets": [
+          { "type": "schematic", "id": "coolant_flow", "bindings": { "entities": ["pump_a", "pump_b"] } }
+        ],
+        "visible": true,
+        "resizable": true,
+        "draggable": true
+      },
+      {
+        "id": "events",
+        "title": "📋 EVENT LOG",
+        "layout": { "x": 0, "y": 8, "w": 12, "h": 4, "minW": 6, "minH": 2, "maxW": 12, "maxH": 8 },
+        "widgets": [
+          { "type": "log", "source": "events", "maxEntries": 100 }
+        ],
+        "visible": true,
+        "resizable": true,
+        "draggable": true
+      },
+      {
+        "id": "players",
+        "title": "👥 PLAYERS",
+        "layout": { "x": 0, "y": 12, "w": 4, "h": 4, "minW": 2, "minH": 2, "maxW": 6, "maxH": 6 },
+        "widgets": [
+          { "type": "grid", "rows": 3, "cols": 1, "bindings": { "entities": ["players"] } }
+        ],
+        "visible": true,
+        "resizable": true,
+        "draggable": true
+      },
+      {
+        "id": "commands",
+        "title": "⌨️ COMMAND LOG",
+        "layout": { "x": 4, "y": 12, "w": 4, "h": 4, "minW": 2, "minH": 2, "maxW": 6, "maxH": 6 },
+        "widgets": [
+          { "type": "log", "source": "commands", "maxEntries": 50 }
+        ],
+        "visible": true,
+        "resizable": true,
+        "draggable": true
+      },
+      {
+        "id": "terminal",
+        "title": "💻 COMMAND LINE",
+        "layout": { "x": 8, "y": 12, "w": 4, "h": 4, "minW": 2, "minH": 2, "maxW": 6, "maxH": 6 },
+        "widgets": [
+          { "type": "terminal", "interactive": true }
+        ],
+        "visible": true,
+        "resizable": true,
+        "draggable": true
+      }
+    ]
+  }
 }
 ```
 
