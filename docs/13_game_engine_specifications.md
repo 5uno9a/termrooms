@@ -189,11 +189,81 @@ interface Condition {
 }
 ```
 
+## Multi-Panel Visualization System
+
+### Panel Layout
+The ReactorSim game uses a multi-panel layout to display different aspects of the simulation:
+
+#### Overview Panel
+- **Core Temperature**: Real-time gauge with color coding
+- **Power Output**: Current power generation in MW
+- **Radiation Level**: Safety monitoring with alert thresholds
+- **Pressure**: System pressure in bars
+- **Status Indicators**: Overall reactor health
+
+#### Coolant Network Panel
+- **Pump Status**: Visual representation of pump states
+- **Flow Rates**: Real-time flow monitoring
+- **Pipe Network**: ASCII/Unicode schematic of cooling system
+- **Temperature Zones**: Heat distribution visualization
+
+#### Events Panel
+- **System Logs**: Chronological event history
+- **Alert Levels**: Color-coded severity (INFO, WARN, ERROR, CRITICAL)
+- **Real-time Updates**: Live event streaming
+- **Filter Options**: Filter by severity or source
+
+#### Commands Panel
+- **Action History**: Recent player actions
+- **System Responses**: Command execution results
+- **Role-based Actions**: Available actions per user role
+- **Command Queue**: Pending actions waiting for execution
+
+#### Players Panel
+- **Online Users**: Real-time presence tracking
+- **Role Assignment**: Operator, Engineer, Observer roles
+- **Action Permissions**: Role-based action availability
+- **Collaboration Status**: Who's doing what
+
+### ASCII/Unicode Visualization
+
+#### Reactor Schematic
+```
+    ⚛ Reactor Core
+    │ Temperature: 65°C
+    │ Power: 450MW
+    │
+    ────┼──── Coolant Loop
+    │    │
+    ◉ Pump A    ◉ Pump B
+    │ ON 50%     │ OFF 0%
+    │            │
+    ────┘    ────┘
+    │
+    ⚙ Turbine
+    │ Efficiency: 85%
+    │
+    ⚡ Generator
+    │ Output: 450MW
+```
+
+#### Status Indicators
+- **Normal**: `●` Green
+- **Warning**: `▲` Yellow  
+- **Error**: `✕` Red
+- **Critical**: `⚠` Blinking Red
+
+#### Progress Bars
+- **Temperature**: `[████████░░] 80°C`
+- **Power**: `[██████░░░░] 450MW`
+- **Coolant**: `[██████████] 100%`
+
 ## Real-Time Synchronization
 
 ### State Updates
 - **Tick Rate**: 1 second intervals
 - **Broadcast**: All state changes sent to all connected players
+- **Panel Updates**: Individual panels update based on relevant state changes
 - **Deterministic**: Same seed produces identical results
 - **Conflict Resolution**: Server state is authoritative
 

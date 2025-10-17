@@ -81,6 +81,121 @@ interface TerminalOutput {
 - Copy-to-clipboard functionality
 - Keyboard shortcuts (Ctrl+C, Ctrl+L, etc.)
 
+### Multi-Panel Layout System
+
+#### ReactorSim Panels
+```tsx
+interface ReactorSimPanels {
+  overview: OverviewPanel;        // Core temperature, pressure, power
+  coolant: CoolantFlowPanel;      // Pump status, flow rates, cooling
+  events: EventsPanel;            // System alerts, warnings, logs
+  commands: CommandLogPanel;      // Action history, user commands
+  players: PlayerPanel;           // Online users, roles, status
+}
+```
+
+#### Panel Components
+- **OverviewPanel**: Real-time reactor status with gauges and meters
+- **CoolantFlowPanel**: Visual representation of cooling system
+- **EventsPanel**: Chronological log of system events and alerts
+- **CommandLogPanel**: History of user actions and system responses
+- **PlayerPanel**: Multi-user collaboration with roles and presence
+
+### ASCII/Unicode Visualization Widgets
+
+#### SchematicWidget
+```tsx
+interface SchematicWidgetProps {
+  gameState: GameState;
+  entities: Entity[];
+  connections: Connection[];
+  scale?: number;
+}
+
+interface Connection {
+  from: string;
+  to: string;
+  type: 'pipe' | 'wire' | 'data';
+  status: 'active' | 'inactive' | 'error';
+}
+```
+
+**Unicode Characters for ReactorSim:**
+```typescript
+const ReactorSymbols = {
+  // Reactor Core
+  core: '⚛',           // Nuclear symbol
+  coreActive: '⚡',     // Active core
+  coreCritical: '☢',   // Critical state
+  
+  // Pipes and Flow
+  pipeHorizontal: '─',
+  pipeVertical: '│',
+  pipeCorner: '┘',
+  pipeTee: '├',
+  pipeCross: '┼',
+  
+  // Pumps and Valves
+  pump: '◉',
+  pumpActive: '●',
+  valve: '◐',
+  valveOpen: '◑',
+  
+  // Control Systems
+  controlRod: '▬',
+  turbine: '⚙',
+  generator: '⚡',
+  
+  // Status Indicators
+  statusGood: '●',
+  statusWarning: '▲',
+  statusError: '✕',
+  statusCritical: '⚠'
+};
+```
+
+#### BarWidget
+```tsx
+interface BarWidgetProps {
+  value: number;
+  min: number;
+  max: number;
+  unit: string;
+  color: 'green' | 'yellow' | 'red';
+  showValue?: boolean;
+}
+```
+
+**Features:**
+- ASCII progress bars: `[████████░░] 80%`
+- Color-coded status indicators
+- Real-time value updates
+- Customizable width and precision
+
+#### LogWidget
+```tsx
+interface LogWidgetProps {
+  entries: LogEntry[];
+  maxEntries: number;
+  autoScroll: boolean;
+  filter?: LogLevel;
+}
+
+interface LogEntry {
+  timestamp: Date;
+  level: 'info' | 'warning' | 'error' | 'critical';
+  message: string;
+  source: string;
+}
+```
+
+**Features:**
+- Chronological event logging
+- Color-coded severity levels
+- Auto-scroll to latest entries
+- Filterable by log level
+- Timestamp formatting
+
 ### Participants Panel
 ```tsx
 interface ParticipantsPanelProps {
@@ -157,7 +272,34 @@ interface Message {
 └─────────────────────────────────────────┘
 ```
 
-### Room View
+### ReactorSim Room View
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  reactor-room-01                    [3 members] [GAME ACTIVE]   │
+├─────────────┬─────────────┬─────────────┬─────────────┬─────────┤
+│  Overview   │  Coolant    │  Events     │  Commands   │ Players │
+│             │  Network    │             │             │         │
+│  ⚛ Core    │  ◉ Pump A   │  [INFO]     │  $ /action  │ 👤 alice│
+│  Temp: 65°C │  Status: ON │  Pump A ON  │  pump_on    │ (operator)│
+│  [████░░░░] │  Flow: 50%  │  [WARN]     │  $ /action  │ 👤 bob  │
+│             │  ◉ Pump B   │  High temp  │  rods_out   │ (engineer)│
+│  ⚡ Power   │  Status: OFF│  [ERROR]    │  $ /sim     │ 👤 charlie│
+│  Output: 450│  Flow: 0%   │  Core temp  │  status     │ (observer)│
+│  [██████░░] │             │  critical!  │             │         │
+│             │  ────┼────  │             │  alice:     │         │
+│  ☢ Radiation│  │    │    │  [CRITICAL] │  "Need to   │         │
+│  Level: 5   │  ────┘    │  Emergency  │  cool down" │         │
+│  [█░░░░░░░░]│             │  shutdown!  │             │         │
+├─────────────┼─────────────┼─────────────┼─────────────┼─────────┤
+│  Terminal Interface (Bottom Panel)                              │
+│  $ /action emergency_shutdown                                    │
+│  alice: EMERGENCY SHUTDOWN ACTIVATED                             │
+│  $ /sim status                                                   │
+│  Reactor Status: SHUTDOWN | Power: 0MW | Temp: 45°C             │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Standard Room View (Non-Game)
 ```
 ┌─────────────────────────────────────────┐
 │  my-room                    [5 members] │

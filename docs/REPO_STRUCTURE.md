@@ -43,6 +43,18 @@ termrooms/
 │   │   │   │   │   ├── CommandInput.tsx
 │   │   │   │   │   ├── CommandOutput.tsx
 │   │   │   │   │   └── CommandHistory.tsx
+│   │   │   │   ├── panels/          # Multi-panel system for ReactorSim
+│   │   │   │   │   ├── OverviewPanel.tsx
+│   │   │   │   │   ├── CoolantFlowPanel.tsx
+│   │   │   │   │   ├── EventsPanel.tsx
+│   │   │   │   │   ├── CommandLogPanel.tsx
+│   │   │   │   │   └── PlayerPanel.tsx
+│   │   │   │   ├── widgets/         # Visualization widgets
+│   │   │   │   │   ├── BarWidget.tsx
+│   │   │   │   │   ├── LogWidget.tsx
+│   │   │   │   │   ├── SchematicWidget.tsx
+│   │   │   │   │   ├── ChecklistWidget.tsx
+│   │   │   │   │   └── TerminalWidget.tsx
 │   │   │   │   ├── room/            # Room-related components
 │   │   │   │   │   ├── RoomView.tsx
 │   │   │   │   │   ├── ParticipantsPanel.tsx
