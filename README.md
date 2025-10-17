@@ -1,6 +1,6 @@
 # TermRooms
 
-> A lightweight, web-based terminal rooms platform for real-time collaboration
+> A web-based game creation platform for terminal-based simulations and multiplayer collaboration
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -9,39 +9,36 @@
 
 ## 🚀 Quick Start
 
-TermRooms lets you create and join collaborative "terminal rooms" directly in your browser using familiar slash commands. No registration required - just create an alias and start collaborating!
+TermRooms is a game creation platform where developers build terminal-based simulations using JSON models, and players join temporary game instances to collaborate on interactive challenges. Features a dev sandbox for creating games and a game library for discovery.
 
 ### Live Demo
 🌐 **[Try TermRooms Now](https://termrooms.dev)**
 
 ### Key Features
-- **Terminal Interface**: All interactions through slash commands (`/create`, `/join`, `/msg`, etc.)
-- **Real-time Communication**: Instant messaging and presence updates
-- **Password Protection**: Secure rooms with optional password protection
-- **Bookmarks**: Save and quickly access your favorite rooms
-- **Accessibility**: Full keyboard navigation and screen reader support
-- **Mobile Responsive**: Works great on all devices
+- **Game Creation Platform**: Build terminal-based simulations using JSON models
+- **Dev Sandbox**: Live preview and validation for game development
+- **Game Library**: Browse and discover public/private games
+- **Game Instances**: Temporary multiplayer sessions with real-time collaboration
+- **ASCII/Unicode Visualization**: Draggable panels with interactive widgets
+- **Terminal Commands**: Slash commands for game management and control
 
 ## 📖 Documentation
 
-### Project Overview
+### Core Documentation
 - [Executive Summary](docs/00_executive_summary.md) - Project overview and course submission
-- [Vision & Elevator Pitch](docs/01_vision.md) - Core philosophy and target audience
-- [User Stories](docs/02_user_stories.md) - Detailed user requirements
+- [Vision & Platform Architecture](docs/01_vision.md) - Core philosophy and platform structure
+- [Command Reference](docs/02_commands.md) - Complete command reference
+- [Feature Specifications](docs/03_features.md) - Feature requirements and specifications
+- [Data Model](docs/04_data_model.md) - Database schema and data structures
+- [API Specifications](docs/05_api.md) - REST API and WebSocket documentation
+- [Implementation Plan](docs/06_implementation_plan.md) - Detailed 4-week development plan
 
-### Technical Specifications
-- [Feature Specifications](docs/03_feature_specifications.md) - Complete feature matrix and requirements
-- [Data Model](docs/04_data_model.md) - Database schema and entity relationships
-- [API Specifications](docs/05_api_specifications.md) - REST API and WebSocket documentation
-- [Security & Privacy](docs/06_security_privacy.md) - Security measures and compliance
+### Legacy Documentation
 - [UI/UX Design](docs/07_ui_ux_design.md) - Design system and accessibility features
-- [System Architecture](docs/08_system_architecture.md) - Technical architecture and deployment
-
-### Development
-- [Testing Strategy](docs/09_testing_strategy.md) - Comprehensive testing approach
-- [Project Plan](docs/10_project_plan.md) - 4-week development timeline
-- [GitHub Setup](docs/11_github_setup.md) - Repository structure and contribution guidelines
-- [Demo Script](docs/12_demo_script.md) - Live demonstration guide
+- [System Architecture](docs/08_system_architecture.md) - Technical architecture details
+- [Dev Sandbox](docs/09_dev_sandbox_and_upload.md) - Dev sandbox specifications
+- [Project Plan](docs/10_project_plan.md) - Project timeline and milestones
+- [Game Engine](docs/13_game_engine_specifications.md) - Game engine specifications
 
 ## 🛠️ Technology Stack
 
@@ -49,16 +46,17 @@ TermRooms lets you create and join collaborative "terminal rooms" directly in yo
 - **React 18** with TypeScript
 - **Vite** for fast development and builds
 - **Tailwind CSS** for styling
+- **Gridstack** for draggable panels
 - **Socket.IO Client** for real-time communication
-- **Axios** for HTTP requests
+- **Monaco Editor** for JSON editing
 
 ### Backend
 - **Node.js** with Express.js
 - **TypeScript** for type safety
 - **Socket.IO** for WebSocket communication
 - **Prisma** ORM with PostgreSQL
-- **JWT** for authentication
-- **Redis** for caching and rate limiting
+- **JSON-based Game Engine** for simulations
+- **Real-time State Management** for multiplayer
 
 ### Infrastructure
 - **GitHub Pages** for frontend hosting
@@ -112,28 +110,38 @@ TermRooms lets you create and join collaborative "terminal rooms" directly in yo
 
 ## 🎯 Usage
 
-### Basic Commands
-
+### Game Discovery
 | Command | Description | Example |
 |---------|-------------|---------|
-| `/create <name>` | Create a new room | `/create my-room` |
-| `/join <name> [password]` | Join a room | `/join my-room secret123` |
-| `/leave` | Leave current room | `/leave` |
-| `/who` | Show room members | `/who` |
-| `/msg <text>` | Send a message | `/msg Hello everyone!` |
-| `/topic <text>` | Set room topic (owner only) | `/topic Project discussion` |
-| `/passwd set <password>` | Set room password (owner only) | `/passwd set mypassword123` |
-| `/passwd clear` | Remove room password (owner only) | `/passwd clear` |
-| `/help` | Show all commands | `/help` |
+| `/games` | List public games | `/games` |
+| `/games search <term>` | Search games | `/games search reactor` |
+| `/games info <gameId>` | Show game details | `/games info reactor-v1` |
+
+### Game Instances
+| Command | Description | Example |
+|---------|-------------|---------|
+| `/join <gameId> [password]` | Join game instance | `/join reactor-abc123 secret` |
+| `/leave` | Leave current instance | `/leave` |
+| `/who` | Show players in instance | `/who` |
+| `/chat <message>` | Send message to instance | `/chat Starting pump A` |
+| `/command <action>` | Execute game action | `/command pump_on` |
+
+### Dev Sandbox
+| Command | Description | Example |
+|---------|-------------|---------|
+| `/dev new <name>` | Create new game | `/dev new my-reactor` |
+| `/dev load <gameId>` | Load existing game | `/dev load reactor-v1` |
+| `/dev save` | Save current game | `/dev save` |
+| `/dev publish [private]` | Publish game | `/dev publish` |
+| `/dev preview` | Preview game | `/dev preview` |
 
 ### Example Workflow
 
-1. **Create an alias**: Enter your preferred name
-2. **Create a room**: `/create project-meeting`
-3. **Set a topic**: `/topic Weekly standup meeting`
-4. **Invite others**: Share the room name
-5. **Collaborate**: Use `/msg` for real-time communication
-6. **Bookmark**: Click ⭐ to save the room
+1. **Browse Games**: Use `/games` to see available games
+2. **Join Instance**: `/join reactor-abc123` to join a game
+3. **Collaborate**: Use `/chat` and `/command` for coordination
+4. **Create Games**: Use `/dev new` to build your own simulations
+5. **Publish**: Use `/dev publish` to share your games
 
 ## 🧪 Testing
 
@@ -200,18 +208,19 @@ We welcome contributions! Please see our [Contributing Guidelines](docs/11_githu
 
 ### Current Phase: Development
 - [x] Project setup and documentation
-- [x] Core architecture design
-- [ ] Backend API implementation
-- [ ] Frontend React components
-- [ ] Real-time WebSocket features
-- [ ] Security and authentication
+- [x] Game platform architecture design
+- [x] JSON-based game engine specifications
+- [ ] Dev sandbox implementation
+- [ ] Game library and discovery
+- [ ] Multiplayer game instances
+- [ ] ReactorSim game implementation
 - [ ] Testing and deployment
 
-### Roadmap
-- **Week 1**: Foundation and core features
-- **Week 2**: Real-time messaging and presence
-- **Week 3**: Security and advanced features
-- **Week 4**: Polish, testing, and deployment
+### Implementation Plan
+- **Week 1**: Foundation and game engine
+- **Week 2**: Dev sandbox and game library
+- **Week 3**: Multiplayer system and communication
+- **Week 4**: ReactorSim game and polish
 
 ## 🐛 Known Issues
 
