@@ -14,6 +14,9 @@ TermRooms is a web-based game creation platform where developers build terminal-
 - **[05_api.md](./05_api.md)** - REST API and WebSocket specifications
 - **[06_implementation_plan.md](./06_implementation_plan.md)** - Detailed implementation plan
 
+### Project Status & Progress
+- **[14_current_status.md](./14_current_status.md)** - **CURRENT PROJECT STATUS** - What's built, what's missing, next steps
+
 ### Legacy Documentation (Reference)
 - **[07_ui_ux_design.md](./07_ui_ux_design.md)** - UI/UX design specifications
 - **[08_system_architecture.md](./08_system_architecture.md)** - System architecture details
