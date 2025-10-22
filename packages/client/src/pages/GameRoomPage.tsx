@@ -1,7 +1,89 @@
-import React from 'react';
-import { Button, Card } from '../components/ui';
+import React, { useState } from 'react';
+import { Button, Card, LoadingSpinner } from '../components/ui';
+import { useGame } from '../contexts/GameContext';
 
 const GameRoomPage: React.FC = () => {
+  const {
+    isConnected,
+    currentRoomId,
+    connectionError,
+    isLoading,
+    joinRoom,
+    leaveRoom,
+    sendAction
+  } = useGame();
+
+  const [roomIdInput, setRoomIdInput] = useState('');
+  const [showJoinModal, setShowJoinModal] = useState(false);
+  const [action, setAction] = useState('');
+
+  // Handle room joining
+  const handleJoinRoom = async () => {
+    if (!roomIdInput.trim()) return;
+    
+    try {
+      const success = await joinRoom(roomIdInput.trim());
+      if (success) {
+        setShowJoinModal(false);
+        setRoomIdInput('');
+      }
+    } catch (error) {
+      console.error('Failed to join room:', error);
+    }
+  };
+
+  // Handle room leaving
+  const handleLeaveRoom = async () => {
+    try {
+      await leaveRoom();
+    } catch (error) {
+      console.error('Failed to leave room:', error);
+    }
+  };
+
+  // Handle creating a new room (generate random room ID)
+  const handleCreateRoom = async () => {
+    const newRoomId = `ROOM-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+    try {
+      const success = await joinRoom(newRoomId);
+      if (success) {
+        setRoomIdInput('');
+      }
+    } catch (error) {
+      console.error('Failed to create room:', error);
+    }
+  };
+
+  // Handle sending game actions
+  const handleSendAction = () => {
+    if (!action.trim()) return;
+    
+    sendAction({
+      type: 'command',
+      payload: { command: action.trim() }
+    });
+    setAction('');
+  };
+
+  // Show connection status
+  if (connectionError) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <Card variant="elevated" padding="lg" className="max-w-md mx-auto text-center">
+          <h2 className="text-2xl font-semibold mb-4 text-red-400">Connection Error</h2>
+          <p className="text-white text-opacity-70 mb-6">{connectionError}</p>
+          <Button 
+            variant="primary" 
+            onClick={() => window.location.reload()}
+            className="w-full"
+          >
+            Retry Connection
+          </Button>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="container mx-auto px-6 py-12">
@@ -78,14 +160,27 @@ const GameRoomPage: React.FC = () => {
               <div className="bg-black bg-opacity-50 backdrop-blur-sm p-4 rounded-lg border border-white border-opacity-20">
                 <h4 className="text-lg font-semibold text-white mb-3">💻 COMMAND TERMINAL</h4>
                 <div className="text-sm font-mono text-white">
-                  <div className="flex items-center">
+                  <div className="flex items-center mb-2">
                     <span className="text-green-400">user@reactor:~$</span>
-                    <span className="ml-2 text-white">increase_power 10</span>
+                    <input
+                      type="text"
+                      value={action}
+                      onChange={(e) => setAction(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && handleSendAction()}
+                      placeholder="Enter command..."
+                      className="ml-2 bg-transparent border-none outline-none text-white flex-1"
+                      disabled={!currentRoomId}
+                    />
                     <span className="ml-2 text-white text-opacity-50 animate-pulse">|</span>
                   </div>
-                  <div className="text-white text-opacity-50 mt-2">
+                  <div className="text-white text-opacity-50 text-xs">
                     Available commands: increase_power, decrease_power, adjust_coolant, status, help
                   </div>
+                  {!currentRoomId && (
+                    <div className="text-red-400 text-xs mt-2">
+                      Join a room to send commands
+                    </div>
+                  )}
                 </div>
               </div>
             </Card>
@@ -96,15 +191,58 @@ const GameRoomPage: React.FC = () => {
             <Card variant="elevated" padding="lg">
               <h3 className="text-xl font-semibold mb-4 text-white">Room Actions</h3>
               <div className="space-y-3">
-                <Button variant="secondary" size="md" className="w-full">
-                  Create Room
-                </Button>
-                <Button variant="secondary" size="md" className="w-full">
-                  Join Room
-                </Button>
-                <Button variant="secondary" size="md" className="w-full">
-                  Leave Room
-                </Button>
+                {!currentRoomId ? (
+                  <>
+                    <Button 
+                      variant="secondary" 
+                      size="md" 
+                      className="w-full"
+                      onClick={handleCreateRoom}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? <LoadingSpinner size="sm" /> : 'Create Room'}
+                    </Button>
+                    <Button 
+                      variant="secondary" 
+                      size="md" 
+                      className="w-full"
+                      onClick={() => setShowJoinModal(true)}
+                      disabled={isLoading}
+                    >
+                      Join Room
+                    </Button>
+                  </>
+                ) : (
+                  <Button 
+                    variant="secondary" 
+                    size="md" 
+                    className="w-full"
+                    onClick={handleLeaveRoom}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? <LoadingSpinner size="sm" /> : 'Leave Room'}
+                  </Button>
+                )}
+              </div>
+              
+              {/* Connection Status */}
+              <div className="mt-4 pt-4 border-t border-white border-opacity-20">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-white text-opacity-70">Connection:</span>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                    isConnected 
+                      ? 'bg-green-500 text-white' 
+                      : 'bg-red-500 text-white'
+                  }`}>
+                    {isConnected ? 'Connected' : 'Disconnected'}
+                  </span>
+                </div>
+                {currentRoomId && (
+                  <div className="flex items-center justify-between text-sm mt-2">
+                    <span className="text-white text-opacity-70">Room:</span>
+                    <span className="text-white font-mono text-xs">{currentRoomId}</span>
+                  </div>
+                )}
               </div>
             </Card>
             
@@ -155,6 +293,50 @@ const GameRoomPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Join Room Modal */}
+      {showJoinModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <Card variant="elevated" padding="lg" className="max-w-md mx-auto">
+            <h3 className="text-xl font-semibold mb-4 text-white">Join Room</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">
+                  Room ID
+                </label>
+                <input
+                  type="text"
+                  value={roomIdInput}
+                  onChange={(e) => setRoomIdInput(e.target.value)}
+                  placeholder="Enter room ID..."
+                  className="w-full px-3 py-2 bg-black bg-opacity-70 backdrop-blur-md border border-white border-opacity-20 text-white placeholder-white placeholder-opacity-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                  onKeyPress={(e) => e.key === 'Enter' && handleJoinRoom()}
+                />
+              </div>
+              <div className="flex space-x-3">
+                <Button
+                  variant="primary"
+                  onClick={handleJoinRoom}
+                  disabled={!roomIdInput.trim() || isLoading}
+                  className="flex-1"
+                >
+                  {isLoading ? <LoadingSpinner size="sm" /> : 'Join Room'}
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    setShowJoinModal(false);
+                    setRoomIdInput('');
+                  }}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 };
