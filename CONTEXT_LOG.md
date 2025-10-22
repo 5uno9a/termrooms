@@ -27,6 +27,22 @@ This log tracks the current state of the project, recent decisions, and importan
 
 ## Recent Decisions
 
+### 2024-12-XX: Scope Reduction - Focus on Core Functionality First
+**DECISION**: Push back all widget rendering (bars, logs, schematics, grids) to post-launch expansion phase.
+
+**RATIONALE**: 
+- Core game functionality is more important than visual widgets
+- Widgets are nice-to-have features that can be added later
+- Focus on MVP: game rooms, multiplayer, game library, basic UI
+- Reduces complexity and gets to working product faster
+
+**IMPACT**: 
+- Implementation plan updated to focus on core features
+- Widget rendering moved to Phase 3 (expansion)
+- Current focus: game state, multiplayer, basic UI interactions
+
+**STATUS**: Decision made, documentation updated
+
 ### 2024-12-XX: Schematic Editor Integration
 **DECISION**: Add schematic editor tools to Dev Sandbox for creating ASCII diagrams.
 

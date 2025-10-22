@@ -2,91 +2,106 @@
 
 ## Scope Limitation Decision
 
-**DECISION**: Focus only on EASY and MEDIUM complexity widgets, skip HARD complexity widgets for initial implementation.
+**DECISION**: Focus on core game functionality first, push ALL widget rendering to post-launch expansion phase.
 
 **RATIONALE**: 
-- Prioritize getting basic functionality working first
-- Avoid over-engineering the initial version
-- Focus on core value proposition
-- Can add advanced features later
+- Core game functionality is more important than visual widgets
+- Widgets are nice-to-have features that can be added later
+- Focus on MVP: game rooms, multiplayer, game library, basic UI
+- Reduces complexity and gets to working product faster
 
-**EXCLUDED FROM INITIAL SCOPE**:
-- Terminal Widget (HARD) - Interactive command line
-- Checklist Widget (HARD) - Dynamic task management
+**CURRENT FOCUS (Phase 1)**:
+- Game Engine (✅ 207 tests passing)
+- Frontend UI (✅ all pages working)
+- Game Library (✅ PowerGrid, ReactorSim)
+- Dev Sandbox (✅ JSON editor, schematic tools)
+- Multiplayer infrastructure
+- Game Room functionality
+- WebSocket integration
+- Game state synchronization
 
-**INCLUDED IN INITIAL SCOPE**:
+**MOVED TO EXPANSION (Phase 3)**:
 - Bar Widget (EASY) - Progress bars and gauges
 - Log Widget (EASY) - Event logs and messages
 - Schematic Widget (MEDIUM) - ASCII/Unicode diagrams
 - Grid Widget (MEDIUM) - Data tables and lists
+- Terminal Widget (HARD) - Interactive command line
+- Checklist Widget (HARD) - Dynamic task management
 
 ## Implementation Phases
 
-### Phase 1: Core Rendering Infrastructure
-**Complexity**: EASY
-**Estimated Effort**: 1-2 development sessions
+### Phase 1: Core Game Functionality (CURRENT FOCUS)
+**Complexity**: EASY-MEDIUM
+**Estimated Effort**: 2-3 development sessions
+**Status**: In Progress
 
-#### 1.1 Widget Registry System
-- Create `WidgetRegistry` class
-- Implement renderer registration
-- Add basic error handling
-- Create interface for all renderers
+#### 1.1 Game Engine Integration
+- ✅ Game Engine (207 tests passing)
+- ✅ Frontend UI (all pages working)
+- 🔄 WebSocket integration for real-time updates
+- 🔄 Game state synchronization between client/server
 
-#### 1.2 State Binding System
-- Create `StateBinder` utility
-- Implement variable path resolution
-- Add entity property access
-- Handle missing data gracefully
+#### 1.2 Game Room Functionality
+- 🔄 Create/Join/Leave room functionality
+- 🔄 Player management and synchronization
+- 🔄 Game instance management
+- 🔄 Real-time game state updates
 
-#### 1.3 Basic Bar Widget
-- Implement `BarWidgetRenderer`
-- Support horizontal progress bars
-- Add unit display
-- Handle min/max values
+#### 1.3 Game Library Management
+- ✅ PowerGrid and ReactorSim games
+- ✅ Dev Sandbox with JSON editor
+- 🔄 Game publishing workflow
+- 🔄 Public/private game management
 
-#### 1.4 Basic Log Widget
-- Implement `LogWidgetRenderer`
-- Display recent events
-- Support timestamp formatting
-- Handle empty logs
+#### 1.4 Basic UI Polish
+- ✅ Responsive design
+- ✅ Accessibility standards
+- ✅ Consistent styling
+- 🔄 Error handling and loading states
 
-### Phase 2: Advanced Widgets
+### Phase 2: Multiplayer Features
 **Complexity**: MEDIUM
 **Estimated Effort**: 2-3 development sessions
+**Status**: Not Started
 
-#### 2.1 Schematic Widget
-- Implement `SchematicWidgetRenderer`
-- Support multi-line ASCII patterns
-- Add variable substitution
-- Handle custom bindings
+#### 2.1 Real-time Synchronization
+- WebSocket connection management
+- Game state broadcasting
+- Player action synchronization
+- Conflict resolution
 
-#### 2.2 Grid Widget
-- Implement `GridWidgetRenderer`
-- Support tabular data display
-- Add column formatting
-- Handle dynamic data
+#### 2.2 Room Management
+- Room creation and joining
+- Player limits and permissions
+- Room persistence
+- Spectator mode
 
-### Phase 3: Integration and Real-time
-**Complexity**: MEDIUM
-**Estimated Effort**: 2-3 development sessions
+#### 2.3 Game Controls
+- Action queuing system
+- Turn-based vs real-time modes
+- Input validation
+- Action history
 
-#### 3.1 Panel Rendering System
-- Create `PanelRenderer` class
-- Integrate with existing Gridstack
-- Add widget layout management
-- Handle panel updates
+### Phase 3: Widget Rendering System (EXPANSION)
+**Complexity**: EASY-MEDIUM
+**Estimated Effort**: 3-4 development sessions
+**Status**: Future
 
-#### 3.2 Template System
-- Create `TemplateManager` class
-- Add pre-defined templates
-- Support template loading
-- Add template validation
+#### 3.1 Basic Widgets
+- Bar Widget (progress bars, gauges)
+- Log Widget (event logs, messages)
+- Grid Widget (data tables, lists)
 
-#### 3.3 Real-time Updates
-- Integrate WebSocket client
-- Add state change detection
-- Implement incremental updates
-- Optimize rendering performance
+#### 3.2 Advanced Widgets
+- Schematic Widget (ASCII/Unicode diagrams)
+- Terminal Widget (interactive command line)
+- Checklist Widget (dynamic task management)
+
+#### 3.3 Visualization System
+- Widget Registry and State Binding
+- Panel Rendering System
+- Template System
+- Real-time Visual Updates
 
 ## Technical Architecture
 
