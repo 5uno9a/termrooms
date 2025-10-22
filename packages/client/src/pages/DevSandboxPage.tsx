@@ -25,6 +25,9 @@ const DevSandboxPage: React.FC = () => {
                   <Button variant="secondary" size="sm">
                     Format JSON
                   </Button>
+                  <Button variant="secondary" size="sm">
+                    Add Schematic
+                  </Button>
                 </div>
               </div>
               <div className="bg-black bg-opacity-50 backdrop-blur-sm p-6 rounded-lg border border-white border-opacity-20 min-h-[400px]">
@@ -37,20 +40,39 @@ const DevSandboxPage: React.FC = () => {
     "author": "Your Name"
   },
   "vars": {
-    "power": {
-      "min": 0,
-      "max": 100,
-      "value": 50
-    },
-    "temperature": {
-      "min": 0,
-      "max": 1000,
-      "value": 300
-    },
-    "coolant": {
-      "min": 0,
-      "max": 100,
-      "value": 80
+    "power": { "min": 0, "max": 100, "value": 50 },
+    "temperature": { "min": 0, "max": 1000, "value": 300 },
+    "coolant": { "min": 0, "max": 100, "value": 80 }
+  },
+  "ui": {
+    "layout": { "type": "grid", "gridSize": 12, "maxPanels": 8 },
+    "panels": [
+      {
+        "id": "core_status",
+        "title": "⚛ CORE STATUS",
+        "layout": { "x": 0, "y": 0, "w": 6, "h": 4 },
+        "widgets": [
+          { "type": "bar", "var": "power", "label": "Power" },
+          { "type": "bar", "var": "temperature", "label": "Temp" }
+        ]
+      },
+      {
+        "id": "coolant_flow",
+        "title": "🌊 COOLANT FLOW",
+        "layout": { "x": 6, "y": 0, "w": 6, "h": 4 },
+        "widgets": [
+          { "type": "schematic", "id": "coolant_system" }
+        ]
+      }
+    ]
+  },
+  "schematics": {
+    "coolant_system": {
+      "template": "┌─ Pump 1 ┐\\n│    ●     │\\n└─┬─┬─┬─┬─┘\\n  │ │ │ │\\n  ▼ ▼ ▼ ▼\\n┌─┬─┬─┬─┬─┐\\n│●│●│●│●│●│ Core\\n└─┴─┴─┴─┴─┘\\n  ▲ ▲ ▲ ▲\\n  │ │ │ │\\n┌─┴─┴─┴─┴─┐\\n│    ●     │\\n└─ Pump 2 ┘",
+      "bindings": {
+        "pump1": "coolant > 50 ? '●' : '○'",
+        "pump2": "coolant > 70 ? '●' : '○'"
+      }
     }
   },
   "actions": [
@@ -58,12 +80,7 @@ const DevSandboxPage: React.FC = () => {
       "name": "Increase Power",
       "description": "Increase reactor power output",
       "effects": [
-        {
-          "type": "modify_var",
-          "target": "power",
-          "operation": "add",
-          "value": 10
-        }
+        { "type": "modify_var", "target": "power", "operation": "add", "value": 10 }
       ]
     }
   ]
@@ -73,6 +90,45 @@ const DevSandboxPage: React.FC = () => {
               <p className="text-sm text-white text-opacity-60 mt-4">
                 Monaco Editor will be integrated here for advanced JSON editing with syntax highlighting and validation.
               </p>
+              
+              {/* Schematic Editor */}
+              <div className="mt-6 p-4 bg-black bg-opacity-30 rounded-lg border border-white border-opacity-10">
+                <h4 className="text-lg font-semibold text-white mb-3">🎨 Schematic Editor</h4>
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-sm text-white text-opacity-70 mb-2">Schematic Name:</label>
+                    <input 
+                      type="text" 
+                      placeholder="coolant_system" 
+                      className="w-full px-3 py-2 bg-black bg-opacity-50 border border-white border-opacity-20 rounded text-white text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-white text-opacity-70 mb-2">ASCII Template:</label>
+                    <textarea 
+                      placeholder="┌─ Pump ─┐&#10;│   ●    │&#10;└─┬─┬─┬─┘&#10;  ▼ ▼ ▼&#10;┌─┬─┬─┬─┐&#10;│●│●│●│●│ Core&#10;└─┴─┴─┴─┘"
+                      rows={6}
+                      className="w-full px-3 py-2 bg-black bg-opacity-50 border border-white border-opacity-20 rounded text-white text-sm font-mono"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-white text-opacity-70 mb-2">Variable Bindings:</label>
+                    <textarea 
+                      placeholder="pump1: coolant > 50 ? '●' : '○'&#10;pump2: coolant > 70 ? '●' : '○'"
+                      rows={3}
+                      className="w-full px-3 py-2 bg-black bg-opacity-50 border border-white border-opacity-20 rounded text-white text-sm font-mono"
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="secondary" size="sm">
+                      Preview Schematic
+                    </Button>
+                    <Button variant="secondary" size="sm">
+                      Add to JSON
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </Card>
           </div>
           
@@ -98,14 +154,37 @@ const DevSandboxPage: React.FC = () => {
             
             <Card variant="elevated" padding="lg">
               <h3 className="text-xl font-semibold mb-4 text-white">Game Preview</h3>
-              <div className="bg-black bg-opacity-50 backdrop-blur-sm p-4 rounded-lg border border-white border-opacity-20 min-h-[200px] flex items-center justify-center">
-                <div className="text-center">
-                  <p className="text-white text-opacity-60 mb-2">Game preview</p>
-                  <div className="text-xs text-white text-opacity-50">
-                    <p>Variables:</p>
-                    <p>Power: 50/100</p>
-                    <p>Temp: 300°C</p>
-                    <p>Coolant: 80%</p>
+              <div className="bg-black bg-opacity-50 backdrop-blur-sm p-4 rounded-lg border border-white border-opacity-20 min-h-[200px]">
+                <div className="space-y-3">
+                  <div className="text-sm font-semibold text-white">⚛ CORE STATUS</div>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-white text-opacity-70">Power:</span>
+                      <span className="text-white">[████████░░] 80%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white text-opacity-70">Temperature:</span>
+                      <span className="text-white">[██████░░░░] 60%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white text-opacity-70">Coolant:</span>
+                      <span className="text-white">[████████░░] 80%</span>
+                    </div>
+                  </div>
+                  <div className="text-xs font-mono text-white text-opacity-70 mt-3">
+                    <div>┌─ Pump 1 ─┐</div>
+                    <div>│    ●     │</div>
+                    <div>└─┬─┬─┬─┬─┘</div>
+                    <div>  │ │ │ │</div>
+                    <div>  ▼ ▼ ▼ ▼</div>
+                    <div>┌─┬─┬─┬─┬─┐</div>
+                    <div>│●│●│●│●│●│ Core</div>
+                    <div>└─┴─┴─┴─┴─┘</div>
+                    <div>  ▲ ▲ ▲ ▲</div>
+                    <div>  │ │ │ │</div>
+                    <div>┌─┴─┴─┴─┴─┐</div>
+                    <div>│    ●     │</div>
+                    <div>└─ Pump 2 ─┘</div>
                   </div>
                 </div>
               </div>

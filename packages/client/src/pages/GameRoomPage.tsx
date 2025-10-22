@@ -16,18 +16,75 @@ const GameRoomPage: React.FC = () => {
           {/* Game Instance - Takes up 3 columns on large screens */}
           <div className="lg:col-span-3">
             <Card variant="elevated" padding="lg">
-              <h3 className="text-2xl font-semibold mb-6 text-white">Game Instance</h3>
-              <div className="bg-black bg-opacity-50 backdrop-blur-sm p-6 rounded-lg border border-white border-opacity-20 min-h-[500px] flex items-center justify-center">
-                <div className="text-center">
-                  <p className="text-white text-opacity-60 mb-4">Game visualization will appear here</p>
-                  <div className="text-sm text-white text-opacity-50">
-                    <p>Multi-panel UI with:</p>
-                    <ul className="list-disc list-inside mt-2">
-                      <li>Game status panel</li>
-                      <li>Coolant flow visualization</li>
-                      <li>Events log</li>
-                      <li>Command terminal</li>
-                    </ul>
+              <h3 className="text-2xl font-semibold mb-6 text-white">Nuclear Reactor Simulator</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                {/* Core Status Panel */}
+                <div className="bg-black bg-opacity-50 backdrop-blur-sm p-4 rounded-lg border border-white border-opacity-20">
+                  <h4 className="text-lg font-semibold text-white mb-3">⚛ CORE STATUS</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-white text-opacity-70">Power:</span>
+                      <span className="text-white">[████████░░] 80%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white text-opacity-70">Temperature:</span>
+                      <span className="text-white">[██████░░░░] 60%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white text-opacity-70">Pressure:</span>
+                      <span className="text-white">[██████████] 100%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white text-opacity-70">Radiation:</span>
+                      <span className="text-white">[██░░░░░░░░] 20%</span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Coolant Flow Panel */}
+                <div className="bg-black bg-opacity-50 backdrop-blur-sm p-4 rounded-lg border border-white border-opacity-20">
+                  <h4 className="text-lg font-semibold text-white mb-3">🌊 COOLANT FLOW</h4>
+                  <div className="text-xs font-mono text-white">
+                    <div>┌─ Pump 1─┐</div>
+                    <div>│    ●    │</div>
+                    <div>└─┬─┬─┬─┬─┘</div>
+                    <div>  │ │ │ │</div>
+                    <div>  ▼ ▼ ▼ ▼</div>
+                    <div>┌─┬─┬─┬─┬─┐</div>
+                    <div>│●│●│●│●│●│ Core</div>
+                    <div>└─┴─┴─┴─┴─┘</div>
+                    <div>  ▲ ▲ ▲ ▲</div>
+                    <div>  │ │ │ │</div>
+                    <div>┌─┴─┴─┴─┴─┐</div>
+                    <div>│    ●    │</div>
+                    <div>└─ Pump 2─┘</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Events Log */}
+              <div className="bg-black bg-opacity-50 backdrop-blur-sm p-4 rounded-lg border border-white border-opacity-20 mb-4">
+                <h4 className="text-lg font-semibold text-white mb-3">📋 EVENTS LOG</h4>
+                <div className="space-y-1 text-sm font-mono text-white text-opacity-70 max-h-32 overflow-y-auto">
+                  <div>[14:32:15] Power increased by 10%</div>
+                  <div>[14:31:45] Coolant flow rate: 85%</div>
+                  <div>[14:31:20] Temperature stable at 60%</div>
+                  <div>[14:30:55] Engineer_01 joined the room</div>
+                  <div>[14:30:30] Reactor startup sequence initiated</div>
+                </div>
+              </div>
+              
+              {/* Command Terminal */}
+              <div className="bg-black bg-opacity-50 backdrop-blur-sm p-4 rounded-lg border border-white border-opacity-20">
+                <h4 className="text-lg font-semibold text-white mb-3">💻 COMMAND TERMINAL</h4>
+                <div className="text-sm font-mono text-white">
+                  <div className="flex items-center">
+                    <span className="text-green-400">user@reactor:~$</span>
+                    <span className="ml-2 text-white">increase_power 10</span>
+                    <span className="ml-2 text-white text-opacity-50 animate-pulse">|</span>
+                  </div>
+                  <div className="text-white text-opacity-50 mt-2">
+                    Available commands: increase_power, decrease_power, adjust_coolant, status, help
                   </div>
                 </div>
               </div>

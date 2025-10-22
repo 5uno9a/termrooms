@@ -14,11 +14,14 @@ const AboutPage: React.FC = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-12">
           <Card variant="elevated" padding="lg">
-            <h3 className="text-2xl font-semibold mb-6 text-white">Our Vision</h3>
+            <h3 className="text-2xl font-semibold mb-6 text-white">What is TermRooms?</h3>
+            <p className="text-white text-opacity-70 leading-relaxed mb-4">
+              TermRooms is a game creation platform that allows anyone to build simulation games 
+              using simple JSON configuration files. No programming knowledge required.
+            </p>
             <p className="text-white text-opacity-70 leading-relaxed">
-              TermRooms aims to democratize game development by making it accessible through 
-              simple JSON configuration files. We believe that anyone should be able to create 
-              engaging simulation games without complex programming knowledge.
+              Games are played in real-time multiplayer rooms with terminal-style interfaces, 
+              perfect for collaborative problem-solving and team-based simulations.
             </p>
           </Card>
           
@@ -43,42 +46,43 @@ const AboutPage: React.FC = () => {
               </li>
               <li className="flex items-center">
                 <span className="w-2 h-2 bg-white rounded-full mr-3"></span>
-                Drag-and-drop panel system
+                Multi-panel UI system
               </li>
             </ul>
           </Card>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
           <Card variant="elevated" padding="lg">
-            <h3 className="text-2xl font-semibold mb-6 text-white">Technology</h3>
-            <div className="space-y-3 text-white text-opacity-70">
-              <p><strong>Frontend:</strong> React, TypeScript, TailwindCSS</p>
-              <p><strong>Backend:</strong> Node.js, Express, Socket.IO</p>
-              <p><strong>Database:</strong> PostgreSQL, Prisma</p>
-              <p><strong>Real-time:</strong> WebSocket connections</p>
+            <h3 className="text-2xl font-semibold mb-6 text-white">How It Works</h3>
+            <div className="space-y-4 text-white text-opacity-70">
+              <div>
+                <strong>1. Create Games:</strong> Use the Dev Sandbox to build games with JSON configuration files
+              </div>
+              <div>
+                <strong>2. Publish Games:</strong> Share your games publicly or keep them private
+              </div>
+              <div>
+                <strong>3. Play Together:</strong> Create multiplayer rooms and collaborate in real-time
+              </div>
             </div>
           </Card>
           
           <Card variant="elevated" padding="lg">
-            <h3 className="text-2xl font-semibold mb-6 text-white">Open Source</h3>
-            <p className="text-white text-opacity-70 mb-4">
-              TermRooms is built with open source technologies and follows 
-              best practices for maintainability and extensibility.
-            </p>
-            <p className="text-white text-opacity-70">
-              The project is designed to be community-driven, with contributions 
-              welcome from developers and game creators.
-            </p>
-          </Card>
-          
-          <Card variant="elevated" padding="lg">
-            <h3 className="text-2xl font-semibold mb-6 text-white">Contact</h3>
+            <h3 className="text-2xl font-semibold mb-6 text-white">Technology Stack</h3>
             <div className="space-y-3 text-white text-opacity-70">
-              <p>For questions, suggestions, or contributions:</p>
-              <p><strong>GitHub:</strong> termrooms/termrooms</p>
-              <p><strong>Issues:</strong> Use GitHub Issues</p>
-              <p><strong>Discussions:</strong> GitHub Discussions</p>
+              <p>
+                <strong>Frontend:</strong> React, TypeScript, TailwindCSS
+              </p>
+              <p>
+                <strong>Backend:</strong> Node.js, Express, Socket.IO
+              </p>
+              <p>
+                <strong>Database:</strong> PostgreSQL, Prisma
+              </p>
+              <p>
+                <strong>Real-time:</strong> WebSocket connections
+              </p>
             </div>
           </Card>
         </div>

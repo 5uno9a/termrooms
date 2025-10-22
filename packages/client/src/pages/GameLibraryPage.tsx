@@ -57,12 +57,12 @@ const GameLibraryPage: React.FC = () => {
             <div className="text-center">
               <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-semibold mb-4 text-white">CitySim</h3>
+              <h3 className="text-2xl font-semibold mb-4 text-white">PowerGrid</h3>
               <p className="text-white text-opacity-70 mb-4 leading-relaxed">
-                City management simulation. Balance resources, manage traffic, and grow your city.
+                Electrical grid management simulation. Balance power generation, distribution, and prevent blackouts.
               </p>
               <div className="flex justify-between items-center mb-4">
                 <span className="text-sm text-white text-opacity-50">By: Community</span>
