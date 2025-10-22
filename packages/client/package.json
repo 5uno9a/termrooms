@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^1.6.0",
     "clsx": "^2.0.0",
+    "gridstack": "^12.3.3",
     "lucide-react": "^0.294.0",
     "monaco-editor": "^0.44.0",
     "react": "^18.2.0",

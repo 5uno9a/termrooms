@@ -4,6 +4,10 @@ import HomePage from '../pages/HomePage';
 import GameLibraryPage from '../pages/GameLibraryPage';
 import DevSandboxPage from '../pages/DevSandboxPage';
 import GameRoomPage from '../pages/GameRoomPage';
+import HelpPage from '../pages/HelpPage';
+import AboutPage from '../pages/AboutPage';
+import DocumentationPage from '../pages/DocumentationPage';
+import NotFoundPage from '../pages/NotFoundPage';
 
 export const routes: RouteObject[] = [
   {
@@ -25,6 +29,22 @@ export const routes: RouteObject[] = [
       {
         path: 'room',
         element: <GameRoomPage />,
+      },
+      {
+        path: 'help',
+        element: <HelpPage />,
+      },
+      {
+        path: 'about',
+        element: <AboutPage />,
+      },
+      {
+        path: 'docs',
+        element: <DocumentationPage />,
+      },
+      {
+        path: '*',
+        element: <NotFoundPage />,
       },
     ],
   },

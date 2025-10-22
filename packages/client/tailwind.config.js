@@ -7,11 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        'terminal-bg': '#0a0a0a',
-        'terminal-green': '#00ff00',
-        'terminal-yellow': '#ffff00',
-        'terminal-red': '#ff0000',
-        'terminal-blue': '#0080ff',
+        'terminal-bg': '#000000',
+        'terminal-text': '#ffffff',
+        'terminal-border': '#404040',
       },
       fontFamily: {
         'mono': ['JetBrains Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', 'monospace'],
