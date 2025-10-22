@@ -7,12 +7,12 @@ export class GameModelParser {
   static parse(jsonString: string): GameModel {
     try {
       const data = JSON.parse(jsonString);
-      
+
       // Check if data is null or not an object
       if (data === null || typeof data !== 'object' || Array.isArray(data)) {
         throw new Error('Game model must be an object');
       }
-      
+
       return this.validateAndNormalize(data);
     } catch (error) {
       if (error instanceof Error && error.message === 'Game model must be an object') {
@@ -30,7 +30,7 @@ export class GameModelParser {
     if (!data.meta || typeof data.meta !== 'object') {
       throw new Error('Game model must have a meta object');
     }
-    
+
     const meta = {
       name: this.validateString(data.meta.name, 'meta.name'),
       version: this.validateString(data.meta.version, 'meta.version'),
@@ -194,7 +194,7 @@ export class GameModelParser {
       }
 
       const effectType = this.validateActionEffectType(effect.type, `action[${actionIndex}].effects[${index}].type`);
-      
+
       // Validate target - required for some effects, optional for others
       let target = undefined;
       if (effect.target !== undefined) {
@@ -342,7 +342,7 @@ export class GameModelParser {
     }
 
     const result: RandomInit = {};
-    
+
     if (init.vars) {
       result.vars = {};
       for (const [key, value] of Object.entries(init.vars)) {

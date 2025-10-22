@@ -154,85 +154,59 @@ npm run test:e2e          # End-to-end tests
 npm run test:coverage     # Coverage report
 ```
 
-### Test Coverage
-- **Unit Tests**: 90%+ coverage for business logic
-- **Integration Tests**: API endpoints and WebSocket functionality
-- **E2E Tests**: Complete user journeys with Playwright
-- **Performance Tests**: Load testing with Artillery.js
+A web-based platform for creating, sharing, and playing terminal-style simulation games in real-time multiplayer rooms.
 
 ## Deployment
 
-### Production Build
 ```bash
-# Build for production
-npm run build
+# Install dependencies
+npm install
 
-# Start production server
-npm run start
-```
-
-### Environment Variables
-```bash
-# Frontend (.env)
-VITE_API_BASE_URL=https://your-api-domain.com
-VITE_WS_URL=wss://your-api-domain.com
-
-# Backend (.env)
-NODE_ENV=production
-DATABASE_URL=postgresql://user:pass@host:5432/termrooms
-JWT_SECRET=your-secret-key
-CORS_ORIGIN=https://your-frontend-domain.com
+# Start development servers
+npm run dev:client  # Frontend on http://localhost:5177
+npm run dev:server  # Backend on http://localhost:3000
 ```
 
 
-### Code Style
-- Follow TypeScript best practices
-- Use Prettier for code formatting
-- Write tests for new features
-- Update documentation as needed
+## Current Status
 
 ## Project Status
 
-### Current Phase: Development
-- [x] Project setup and documentation
-- [x] Game platform architecture design
-- [x] JSON-based game engine specifications
-- [ ] Dev sandbox implementation
-- [ ] Game library and discovery
-- [ ] Multiplayer game instances
-- [ ] ReactorSim game implementation
-- [ ] Testing and deployment
+### ✅ Completed
+- Game Engine Core (85% complete)
+- Frontend UI (70% complete)
+- Documentation (75% complete)
 
-### Implementation Plan
-- **Week 1**: Foundation and game engine
-- **Week 2**: Dev sandbox and game library
-- **Week 3**: Multiplayer system and communication
-- **Week 4**: ReactorSim game and polish
+### 🚧 In Progress
+- Visualization System (0% complete)
 
 ## Known Issues
 
-- WebSocket reconnection needs improvement
-- Mobile keyboard handling could be better
-- Rate limiting needs fine-tuning
+## Architecture
 
 ##  License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- **Frontend**: React + TypeScript + Vite
+- **Backend**: Node.js + Express + Socket.IO
+- **Database**: PostgreSQL + Prisma
+- **Real-time**: WebSocket for state synchronization
 
 ## Acknowledgments
 
-- [React](https://reactjs.org/) for the frontend framework
-- [Socket.IO](https://socket.io/) for real-time communication
-- [Prisma](https://prisma.io/) for database management
-- [Tailwind CSS](https://tailwindcss.com/) for styling
-- [Vite](https://vitejs.dev/) for build tooling
+- [Architecture](./docs/ARCHITECTURE.md) - System design and components
+- [API Reference](./docs/API.md) - REST and WebSocket APIs
+- [Game Engine](./docs/GAME_ENGINE.md) - JSON-based game system
+- [Development Guide](./docs/DEVELOPMENT.md) - Setup and contribution
+- [Decision Log](./docs/DECISIONS.md) - Architectural decisions
 
 ## Support
 
-- **Documentation**: Check the [docs](docs/) folder
-- **Issues**: [GitHub Issues](https://github.com/yourusername/termrooms/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/termrooms/discussions)
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests
+5. Submit a pull request
 
----
+## License
 
 
